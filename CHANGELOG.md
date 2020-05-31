@@ -1,3 +1,7 @@
+## [1.0.1] - Release 
+
+ * Bug fixed
+ 
 ## [1.0.0] - Release 
 
  * Slider with custom animation time
