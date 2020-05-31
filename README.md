@@ -8,11 +8,11 @@ A Flutter package with custom implementation of the Sider Drawer Menu
 
 
 
-To start using this package, add `fluttersliderdrawer` dependency to your `pubspec.yaml`
+To start using this package, add `flutter_slider_drawer` dependency to your `pubspec.yaml`
 
 ```yaml
 dependencies:
-  fluttersliderdrawer: '<latest_release>'
+  flutter_slider_drawer: '<latest_release>'
 ```
 
  
