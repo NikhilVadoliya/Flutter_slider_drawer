@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:fluttersliderdrawer_example/main_widget.dart';
 import 'dart:async';
 
-import 'package:fluttersliderdrawer/flutter_slider_drawer.dart';
-import 'package:fluttersliderdrawer_example/main_widget.dart';
 import 'package:fluttersliderdrawer_example/menu_widget.dart';
 
 void main() {
@@ -35,7 +35,6 @@ class _MyAppState extends State<MyApp> {
             key: _key,
             appBarPadding: const EdgeInsets.only(top: 20),
             sliderMenuOpenOffset: 250,
-//            sliderMenuCloseOffset: 50,
             appBarHeight: 60,
             title: Text(
               title,

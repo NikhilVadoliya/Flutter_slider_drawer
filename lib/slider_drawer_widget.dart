@@ -49,7 +49,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   double _slideBarYOffset = 0;
   bool _isSlideBarOpen = false;
   AnimationController _animationController;
-   double _pageScale = 1;
+  double _pageScale = 1;
 
   Widget drawerIcon;
   double db = 0;
@@ -91,7 +91,6 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   @override
   void initState() {
     super.initState();
-
 
     _animationController = AnimationController(
         vsync: this,

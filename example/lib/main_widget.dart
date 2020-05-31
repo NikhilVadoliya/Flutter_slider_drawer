@@ -54,14 +54,12 @@ class _MainWidgetState extends State<MainWidget> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10),
-                      child: Flexible(
-                        child: Text(
-                          dataList[index].detail,
-                          style: TextStyle(
-                              fontFamily: 'BalsamiqSans_Regular',
-                              fontSize: 15,
-                              color: Colors.white),
-                        ),
+                      child: Text(
+                        dataList[index].detail,
+                        style: TextStyle(
+                            fontFamily: 'BalsamiqSans_Regular',
+                            fontSize: 15,
+                            color: Colors.white),
                       ),
                     )
                   ],
