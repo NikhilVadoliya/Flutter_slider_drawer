@@ -51,7 +51,6 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   double _slideBarYOffset = 0;
   bool _isSlideBarOpen = false;
   AnimationController _animationController;
-  double _pageScale = 1;
 
   Widget drawerIcon;
   double db = 0;
@@ -68,7 +67,6 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
           ? widget.sliderMenuOpenOffset
           : widget.sliderMenuCloseOffset;
       //  _slideBarYOffset = _isSlideBarOpen ? widget.sliderMainOffset : 0;
-      _pageScale = _isSlideBarOpen ? 0.8 : 1;
     });
   }
 
@@ -77,8 +75,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       _animationController.forward();
       _slideBarXOffset = widget.sliderMenuOpenOffset;
       //     _slideBarYOffset = widget.sliderMainOffset;
-      _pageScale = 0.8;
-    });
+     });
   }
 
   void closeDrawer() {
@@ -86,7 +83,6 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       _animationController.reverse();
       _slideBarXOffset = widget.sliderMenuCloseOffset;
       _slideBarYOffset = 0;
-      _pageScale = 1;
     });
   }
 
