@@ -1,7 +1,7 @@
 # Flutter slider drawer
 
 
-A Flutter package with custom implementation of the Sider Drawer Menu (Drawer)
+A Flutter package with custom implementation of the Sider Drawer Menu
 
 ![Plugin example demo](demo.gif)
 
@@ -20,7 +20,7 @@ dependencies:
 # Features
 
   - Slider with custom animation time
-  - Provide Basic Appbar with customization of color, sizes and titles
+  - Provide Basic Appbar with customization of color, sizes and title
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
 
