@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - fluttersliderdrawer (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - fluttersliderdrawer (from `.symlinks/plugins/fluttersliderdrawer/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  fluttersliderdrawer:
+    :path: ".symlinks/plugins/fluttersliderdrawer/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  fluttersliderdrawer: a3c3b17a7d7de2d709ca9544c33926fa1cf04599
+
+PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
+
+COCOAPODS: 1.9.1
