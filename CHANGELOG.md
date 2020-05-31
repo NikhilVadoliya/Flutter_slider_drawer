@@ -1,3 +1,6 @@
-## 0.0.1
+## [1.0.0] - Release 
 
-* TODO: Describe initial release.
+ * Slider with custom animation time
+ * Provide Basic Appbar with customization of color, sizes and title
+ * Dynamic slider open and close offset
+ * Provide drawer icon animation 

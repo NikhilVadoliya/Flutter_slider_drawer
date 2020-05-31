@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-import 'package:fluttersliderdrawer_example/main_widget.dart';
 import 'dart:async';
 
-import 'package:fluttersliderdrawer_example/menu_widget.dart';
+import 'main_widget.dart';
+import 'menu_widget.dart';
 
 void main() {
   runApp(MyApp());
