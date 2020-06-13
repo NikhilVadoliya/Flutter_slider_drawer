@@ -56,17 +56,17 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   double db = 0;
 
   bool get isDrawerOpen => _isSlideBarOpen;
-  Animation<double> _translationValues;
 
   void toggle() {
     setState(() {
       _isSlideBarOpen
-          ? _animationController.forward()
-          : _animationController.reverse();
+          ? _animationController.reverse()
+          : _animationController.forward();
       _slideBarXOffset = _isSlideBarOpen
-          ? widget.sliderMenuOpenOffset
-          : widget.sliderMenuCloseOffset;
-      //  _slideBarYOffset = _isSlideBarOpen ? widget.sliderMainOffset : 0;
+          ? widget.sliderMenuCloseOffset
+          : widget.sliderMenuOpenOffset;
+      _slideBarYOffset = 0;
+      _isSlideBarOpen = !_isSlideBarOpen;
     });
   }
 
@@ -74,8 +74,8 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
     setState(() {
       _animationController.forward();
       _slideBarXOffset = widget.sliderMenuOpenOffset;
-      //     _slideBarYOffset = widget.sliderMainOffset;
-     });
+      _isSlideBarOpen=true;
+    });
   }
 
   void closeDrawer() {
@@ -83,6 +83,8 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       _animationController.reverse();
       _slideBarXOffset = widget.sliderMenuCloseOffset;
       _slideBarYOffset = 0;
+      _isSlideBarOpen=false;
+
     });
   }
 
@@ -100,58 +102,57 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   Widget build(BuildContext context) {
     return Container(
         child: Stack(children: <Widget>[
-          Container(
-            width: widget.sliderMenuOpenOffset,
-            child: widget.sliderMenuWidget,
-          ),
-          AnimatedContainer(
-              duration:
+      Container(
+        width: widget.sliderMenuOpenOffset,
+        child: widget.sliderMenuWidget,
+      ),
+      AnimatedContainer(
+          duration:
               Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds),
-              curve: Curves.easeIn,
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.white,
-              transform: Matrix4.translationValues(
-                  _slideBarXOffset, _slideBarYOffset, 1.0),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: widget.appBarPadding ?? const EdgeInsets.only(top: 24),
-                    color: widget.appBarColor,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          height: widget.appBarHeight ?? 0,
-                        ),
-                        widget.drawerIcon ??
-                            IconButton(
-                                icon: AnimatedIcon(
-                                    icon: AnimatedIcons.menu_close,
-                                    color: widget.drawerIconColor,
-                                    size: widget.drawerIconSize,
-                                    progress: _animationController),
-                                onPressed: () {
-                                  _isSlideBarOpen = !_isSlideBarOpen;
-                                  toggle();
-                                }),
-                        Expanded(
-                          child: widget.isTitleCenter
-                              ? Center(
-                            child: widget.title,
-                          )
-                              : widget.title,
-                        ),
-                        widget.trailing ??
-                            SizedBox(
-                              width: 35,
-                            )
-                      ],
+          curve: Curves.easeIn,
+          width: double.infinity,
+          height: double.infinity,
+          color: Colors.white,
+          transform: Matrix4.translationValues(
+              _slideBarXOffset, _slideBarYOffset, 1.0),
+          child: Column(
+            children: <Widget>[
+              Container(
+                padding: widget.appBarPadding ?? const EdgeInsets.only(top: 24),
+                color: widget.appBarColor,
+                child: Row(
+                  children: <Widget>[
+                    SizedBox(
+                      height: widget.appBarHeight ?? 0,
                     ),
-                  ),
-                  Expanded(child: widget.sliderMainWidget),
-                ],
-              )),
-        ]));
+                    widget.drawerIcon ??
+                        IconButton(
+                            icon: AnimatedIcon(
+                                icon: AnimatedIcons.menu_close,
+                                color: widget.drawerIconColor,
+                                size: widget.drawerIconSize,
+                                progress: _animationController),
+                            onPressed: () {
+                              toggle();
+                            }),
+                    Expanded(
+                      child: widget.isTitleCenter
+                          ? Center(
+                              child: widget.title,
+                            )
+                          : widget.title,
+                    ),
+                    widget.trailing ??
+                        SizedBox(
+                          width: 35,
+                        )
+                  ],
+                ),
+              ),
+              Expanded(child: widget.sliderMainWidget),
+            ],
+          )),
+    ]));
   }
 
   @override
