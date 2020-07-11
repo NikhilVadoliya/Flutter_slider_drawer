@@ -5,7 +5,7 @@ author: Nikhil Vadoliya <vadoliya.nikhil99@gmail.com>
 homepage: https://github.com/NikhilVadoliya/Flutter_slider_drawer
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
