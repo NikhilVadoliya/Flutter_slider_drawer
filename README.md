@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)   [![pub package](https://img.shields.io/github/languages/code-size/NikhilVadoliya/Flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)
 
 
-A Flutter package with custom implementation of the Sider Drawer Menu
+A Flutter package with custom implementation of the Slider Drawer Menu 
 
 ![Plugin example demo](demo.gif)
 
@@ -53,9 +53,14 @@ SliderMenuContainer(
  ```
  
  
+ 
+ 
  | sliderOpen: SliderOpen.LEFT_TO_RIGHT  | sliderOpen: SliderOpen.RIGHT_TO_LEFT  |
  |---|---|
  | ![slider_left](slide_left.gif)  | ![slider_right](slide_right.gif)  |
+ 
+ 
+ 
  
 ### Controlling the drawer
 
