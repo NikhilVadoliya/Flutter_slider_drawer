@@ -10,6 +10,8 @@ A Flutter package with custom implementation of the Sider Drawer Menu
 
 
 
+
+
 To start using this package, add `flutter_slider_drawer` dependency to your `pubspec.yaml`
 
 ```yaml
@@ -50,6 +52,10 @@ SliderMenuContainer(
             sliderMainWidget: MainWidget()),
  ```
  
+ 
+ | sliderOpen: SliderOpen.LEFT_TO_RIGHT  | sliderOpen: SliderOpen.RIGHT_TO_LEFT  |
+ |---|---|
+ | ![slider_left](slide_left.gif)  | ![slider_right](slide_right.gif)  |
  
 ### Controlling the drawer
 

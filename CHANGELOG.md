@@ -1,3 +1,8 @@
+## [1.0.2] - Release 
+
+ * Added RightToLeft/LeftToRight slide feature
+ * Bug fixed
+
 ## [1.0.1] - Release 
 
  * Bug fixed
