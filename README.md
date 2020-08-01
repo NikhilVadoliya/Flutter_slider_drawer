@@ -32,25 +32,30 @@ dependencies:
 # Code 
 
 ```
-SliderMenuContainer(
+ Scaffold(
+        body: SliderMenuContainer(
             appBarColor: Colors.white,
             key: _key,
-            appBarPadding: const EdgeInsets.only(top: 20),
-            sliderMenuOpenOffset: 250,
+            sliderOpen: SliderOpen.TOP_TO_BOTTOM,
+            appBarPadding: const EdgeInsets.only(top: 10),
+            sliderMenuOpenOffset: 210,
             appBarHeight: 60,
             title: Text(
               title,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
             ),
-            sliderMenuWidget: MenuWidget(
+            sliderMenu: MenuWidget(
+              onProfilePictureClick: () {},
               onItemClick: (title) {
                 _key.currentState.closeDrawer();
+
                 setState(() {
                   this.title = title;
                 });
               },
             ),
-            sliderMainWidget: MainWidget()),
+            sliderMain: MainWidget()),
+      ),
  ```
  
  
