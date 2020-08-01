@@ -1,3 +1,10 @@
+## [1.0.3] - Release 
+
+ * Added TopToBottom slide feature
+ * Added Shadow feature with shadowColor,shadowBlurRadius and shadowSpread dynamic handle
+ * Bug fixed
+
+
 ## [1.0.2] - Release 
 
  * Added RightToLeft/LeftToRight slide feature

@@ -27,7 +27,8 @@ dependencies:
   - Provide Basic Appbar with customization of color, sizes and title
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
-  - Provide RTL and LTR slider open selection 
+  - Provide shadow of Main screen with customization of shadow colors,blurRadius and spreadRadius
+  - Provide RTL(RightToLeft),LTR(LeftToRight) and TTB(TopToBottom) slider open selection 
 
 # Code 
 
@@ -60,10 +61,11 @@ dependencies:
  
  
  
- 
- | sliderOpen: SliderOpen.LEFT_TO_RIGHT  | sliderOpen: SliderOpen.RIGHT_TO_LEFT  |
- |---|---|
- | ![slider_left](slide_left.gif)  | ![slider_right](slide_right.gif)  |
+ # Slider open  
+
+ | SliderOpen.LEFT_TO_RIGHT  | SliderOpen.RIGHT_TO_LEFT  | SliderOpen.TOP_TO_BOTTOM  |
+ |---|---|---|
+ | ![slider_left](slide_left.gif)  | ![slider_right](slide_right.gif)  | ![slider_top](slide_top.gif)  |
  
  
  
