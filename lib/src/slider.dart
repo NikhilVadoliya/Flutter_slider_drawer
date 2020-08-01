@@ -63,10 +63,17 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       _isSlideBarOpen
           ? _animationController.reverse()
           : _animationController.forward();
-      _slideBarXOffset = _isSlideBarOpen
-          ? widget.sliderMenuCloseOffset
-          : widget.sliderMenuOpenOffset;
-      _slideBarYOffset = 0;
+      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
+          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
+        _slideBarXOffset = _isSlideBarOpen
+            ? widget.sliderMenuCloseOffset
+            : widget.sliderMenuOpenOffset;
+      } else {
+        _slideBarYOffset = _isSlideBarOpen
+            ? widget.sliderMenuCloseOffset
+            : widget.sliderMenuOpenOffset;
+      }
+
       _isSlideBarOpen = !_isSlideBarOpen;
     });
   }
@@ -74,7 +81,12 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   void openDrawer() {
     setState(() {
       _animationController.forward();
-      _slideBarXOffset = widget.sliderMenuOpenOffset;
+      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
+          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
+        _slideBarXOffset = widget.sliderMenuOpenOffset;
+      } else {
+        _slideBarYOffset = widget.sliderMenuOpenOffset;
+      }
       _isSlideBarOpen = true;
     });
   }
@@ -82,8 +94,12 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   void closeDrawer() {
     setState(() {
       _animationController.reverse();
-      _slideBarXOffset = widget.sliderMenuCloseOffset;
-      _slideBarYOffset = 0;
+      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
+          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
+        _slideBarXOffset = widget.sliderMenuCloseOffset;
+      } else {
+        _slideBarYOffset = widget.sliderMenuCloseOffset;
+      }
       _isSlideBarOpen = false;
     });
   }
@@ -100,6 +116,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
 
   @override
   Widget build(BuildContext context) {
+    getTranslationValues(widget.sliderOpen);
     return Container(
         child: Stack(children: <Widget>[
       menuWidget(),
@@ -110,12 +127,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
           width: double.infinity,
           height: double.infinity,
           color: Colors.white,
-          transform: Matrix4.translationValues(
-              widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT
-                  ? -_slideBarXOffset
-                  : _slideBarXOffset,
-              _slideBarYOffset,
-              1.0),
+          transform: getTranslationValues(widget.sliderOpen),
           child: Column(
             children: <Widget>[
               Container(
@@ -169,21 +181,53 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   }
 
   menuWidget() {
-    if (widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
-      return Positioned(
-        right: 0,
-        top: 0,
-        bottom: 0,
-        child: Container(
+    switch (widget.sliderOpen) {
+      case SliderOpen.LEFT_TO_RIGHT:
+        return Container(
           width: widget.sliderMenuOpenOffset,
           child: widget.sliderMenuWidget,
-        ),
-      );
-    } else {
-      return Container(
-        width: widget.sliderMenuOpenOffset,
-        child: widget.sliderMenuWidget,
-      );
+        );
+        break;
+      case SliderOpen.RIGHT_TO_LEFT:
+        return Positioned(
+          right: 0,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: widget.sliderMenuOpenOffset,
+            child: widget.sliderMenuWidget,
+          ),
+        );
+      case SliderOpen.TOP_TO_BOTTOM:
+        return Positioned(
+          right: 0,
+          left: 0,
+          top: 0,
+          child: Container(
+            width: widget.sliderMenuOpenOffset,
+            child: widget.sliderMenuWidget,
+          ),
+        );
+        break;
+    }
+    if (widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
+    } else {}
+  }
+
+  Matrix4 getTranslationValues(SliderOpen sliderOpen) {
+    switch (sliderOpen) {
+      case SliderOpen.LEFT_TO_RIGHT:
+        return Matrix4.translationValues(
+            _slideBarXOffset, _slideBarYOffset, 1.0);
+      case SliderOpen.RIGHT_TO_LEFT:
+        return Matrix4.translationValues(
+            -_slideBarXOffset, _slideBarYOffset, 1.0);
+
+      case SliderOpen.TOP_TO_BOTTOM:
+        return Matrix4.translationValues(0, _slideBarYOffset, 1.0);
+
+      default:
+        return Matrix4.translationValues(0, 0, 1.0);
     }
   }
 }

@@ -1,7 +1,6 @@
 name: flutter_slider_drawer
-description: A Flutter package with custom implementation of the Sider Drawer Menu
-version: 1.0.1
-author: Nikhil Vadoliya <vadoliya.nikhil99@gmail.com>
+description: A Flutter package with custom implementation of the Slider Drawer Menu
+version: 1.0.2
 homepage: https://github.com/NikhilVadoliya/Flutter_slider_drawer
 
 environment:

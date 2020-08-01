@@ -27,6 +27,7 @@ dependencies:
   - Provide Basic Appbar with customization of color, sizes and title
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
+  - Provide RTL and LTR slider open selection 
 
 # Code 
 
