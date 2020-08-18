@@ -11,6 +11,7 @@ class SliderMenuContainer extends StatefulWidget {
   final Color drawerIconColor;
   final Widget drawerIcon;
   final double drawerIconSize;
+  final Color splashColor;
   final double appBarHeight;
   final Widget title;
   final bool isTitleCenter;
@@ -32,6 +33,7 @@ class SliderMenuContainer extends StatefulWidget {
     this.sliderMenuOpenOffset = 265,
     this.drawerIconColor = Colors.black,
     this.drawerIcon,
+    this.splashColor,
     this.isTitleCenter = true,
     this.trailing,
     this.appBarColor = Colors.white,
@@ -182,6 +184,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
     List<Widget> list = [
       widget.drawerIcon ??
           IconButton(
+              splashColor: widget.splashColor ?? Colors.black,
               icon: AnimatedIcon(
                   icon: AnimatedIcons.menu_close,
                   color: widget.drawerIconColor,
