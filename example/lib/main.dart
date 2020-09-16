@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
               title,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
             ),
-            sliderMenuWidget: MenuWidget(
+            sliderMenu: MenuWidget(
               onItemClick: (title) {
                 _key.currentState.closeDrawer();
                 setState(() {
@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
                 });
               },
             ),
-            sliderMainWidget: MainWidget()),
+            sliderMain: MainWidget()),
       ),
     );
   }

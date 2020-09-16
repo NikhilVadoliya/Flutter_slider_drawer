@@ -29,7 +29,7 @@ class _MainWidgetState extends State<MainWidget> {
     return Container(
       child: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          itemBuilder: (buider, index) {
+          itemBuilder: (builder, index) {
             return LimitedBox(
               maxHeight: 150,
               child: Container(

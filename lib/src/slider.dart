@@ -163,7 +163,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
           curve: Curves.easeIn,
           width: double.infinity,
           height: double.infinity,
-          color: Colors.white,
+            color: widget.appBarColor,
           transform: getTranslationValues(widget.sliderOpen),
           child: Column(
             children: <Widget>[
