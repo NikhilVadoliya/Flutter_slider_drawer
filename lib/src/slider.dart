@@ -1,6 +1,9 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:flutter_slider_drawer/src/app_bar.dart';
+import 'package:flutter_slider_drawer/src/menu_bar.dart';
+import 'package:flutter_slider_drawer/src/helper/utils.dart';
+import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
 class SliderMenuContainer extends StatefulWidget {
   final Widget sliderMenu;
@@ -9,6 +12,7 @@ class SliderMenuContainer extends StatefulWidget {
   final double sliderMenuOpenSize;
   final double sliderMenuCloseSize;
 
+  final bool hasAppBar;
   final Color drawerIconColor;
   final Widget drawerIcon;
   final double drawerIconSize;
@@ -41,13 +45,14 @@ class SliderMenuContainer extends StatefulWidget {
     this.appBarPadding,
     this.title,
     this.drawerIconSize = 27,
-    this.appBarHeight,
+    this.appBarHeight = 70,
     this.sliderMenuCloseSize = 0,
     this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
     this.isShadow = false,
     this.shadowColor = Colors.grey,
     this.shadowBlurRadius = 25.0,
     this.shadowSpreadRadius = 5.0,
+    this.hasAppBar = true,
   })  : assert(sliderMenu != null),
         assert(sliderMain != null),
         super(key: key);
@@ -66,14 +71,13 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   /// check whether drawer is open
   bool get isDrawerOpen => _animationDrawerController.isCompleted;
 
+  /// it's provide [animationController] for handle and lister drawer animation
   AnimationController get animationController => _animationDrawerController;
 
   /// Toggle drawer
-  void toggle() {
-    _animationDrawerController.isCompleted
-        ? _animationDrawerController.reverse()
-        : _animationDrawerController.forward();
-  }
+  void toggle() => _animationDrawerController.isCompleted
+      ? _animationDrawerController.reverse()
+      : _animationDrawerController.forward();
 
   /// Open drawer
   void openDrawer() => _animationDrawerController.forward();
@@ -102,16 +106,20 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
     return Container(
         child: Stack(children: <Widget>[
       /// Display Menu
-      menuWidget(),
+      SlideMenuBar(
+        slideDirection: widget.slideDirection,
+        sliderMenu: widget.sliderMenu,
+        sliderMenuOpenSize: widget.sliderMenuOpenSize,
+      ),
 
-      /// Dev -Displaying the  shadow
+      /// Displaying the  shadow
       if (widget.isShadow) ...[
         AnimatedBuilder(
           animation: _animationDrawerController,
           builder: (anim, child) {
             return Transform.translate(
-              offset: getOffsetValueForShadow(
-                  widget.slideDirection, animation.value),
+              offset: Utils.getOffsetValueForShadow(widget.slideDirection,
+                  animation.value, widget.sliderMenuOpenSize),
               child: child,
             );
             return child;
@@ -125,8 +133,8 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
                 blurRadius: widget.shadowBlurRadius, // soften the shadow
                 spreadRadius: widget.shadowSpreadRadius, //extend the shadow
                 offset: Offset(
-                  15.0, // Move to right 10  horizontally
-                  15.0, // Move to bottom 10 Vertically
+                  15.0, // Move to right 15  horizontally
+                  15.0, // Move to bottom 15 Vertically
                 ),
               )
             ]),
@@ -134,12 +142,13 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         ),
       ],
 
-      //Dev- Display Main Screen
+      //Display Main Screen
       AnimatedBuilder(
         animation: _animationDrawerController,
         builder: (anim, child) {
           return Transform.translate(
-            offset: getOffsetValues(widget.slideDirection, animation.value),
+            offset:
+                Utils.getOffsetValues(widget.slideDirection, animation.value),
             child: child,
           );
         },
@@ -149,112 +158,28 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
           color: widget.appBarColor,
           child: Column(
             children: <Widget>[
-              Container(
-                padding: widget.appBarPadding ?? const EdgeInsets.only(top: 24),
-                color: widget.appBarColor,
-                child: Row(
-                  children: appBar(),
+              if (widget.hasAppBar)
+                SliderAppBar(
+                  slideDirection: widget.slideDirection,
+                  onTap: () => toggle(),
+                  appBarHeight: widget.appBarHeight,
+                  animationController: _animationDrawerController,
+                  appBarColor: widget.appBarColor,
+                  appBarPadding: widget.appBarPadding,
+                  drawerIcon: widget.drawerIcon,
+                  drawerIconColor: widget.drawerIconColor,
+                  drawerIconSize: widget.drawerIconSize,
+                  isTitleCenter: widget.isTitleCenter,
+                  splashColor: widget.splashColor,
+                  title: widget.title ?? '',
+                  trailing: widget.trailing,
                 ),
-              ),
               Expanded(child: widget.sliderMain),
             ],
           ),
         ),
       ),
     ]));
-  }
-
-  List<Widget> appBar() {
-    List<Widget> list = [
-      widget.drawerIcon ??
-          IconButton(
-              splashColor: widget.splashColor ?? Colors.black,
-              icon: AnimatedIcon(
-                  icon: AnimatedIcons.menu_close,
-                  color: widget.drawerIconColor,
-                  size: widget.drawerIconSize,
-                  progress: _animationDrawerController),
-              onPressed: () => toggle()),
-      Expanded(
-        child: widget.isTitleCenter
-            ? Center(
-                child: widget.title,
-              )
-            : widget.title,
-      ),
-      widget.trailing ??
-          SizedBox(
-            width: 35,
-          )
-    ];
-
-    if (widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) {
-      return list.reversed.toList();
-    }
-    return list;
-  }
-
-  /// Build and Align the Menu widget based on the slide open type
-  menuWidget() {
-    switch (widget.slideDirection) {
-      case SlideDirection.LEFT_TO_RIGHT:
-        return Container(
-          width: widget.sliderMenuOpenSize,
-          child: widget.sliderMenu,
-        );
-        break;
-      case SlideDirection.RIGHT_TO_LEFT:
-        return Positioned(
-          right: 0,
-          top: 0,
-          bottom: 0,
-          child: Container(
-            width: widget.sliderMenuOpenSize,
-            child: widget.sliderMenu,
-          ),
-        );
-      case SlideDirection.TOP_TO_BOTTOM:
-        return Positioned(
-          right: 0,
-          left: 0,
-          top: 0,
-          child: Container(
-            width: widget.sliderMenuOpenSize,
-            child: widget.sliderMenu,
-          ),
-        );
-        break;
-    }
-  }
-
-  ///
-  /// This method get Offset base on [sliderOpen] type
-  ///
-
-  Offset getOffsetValues(SlideDirection direction, double value) {
-    switch (direction) {
-      case SlideDirection.LEFT_TO_RIGHT:
-        return Offset(value, 0);
-      case SlideDirection.RIGHT_TO_LEFT:
-        return Offset(-value, 0);
-      case SlideDirection.TOP_TO_BOTTOM:
-        return Offset(0, value);
-      default:
-        return Offset(value, 0);
-    }
-  }
-
-  Offset getOffsetValueForShadow(SlideDirection direction, double value) {
-    switch (direction) {
-      case SlideDirection.LEFT_TO_RIGHT:
-        return Offset(value - (widget.sliderMenuOpenSize > 50 ? 20 : 10), 0);
-      case SlideDirection.RIGHT_TO_LEFT:
-        return Offset(-value - 5, 0);
-      case SlideDirection.TOP_TO_BOTTOM:
-        return Offset(0, value - (widget.sliderMenuOpenSize > 50 ? 15 : 5));
-      default:
-        return Offset(value - 30.0, 0);
-    }
   }
 
   @override
