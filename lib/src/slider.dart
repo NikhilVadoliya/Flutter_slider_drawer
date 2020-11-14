@@ -58,11 +58,6 @@ class SliderMenuContainer extends StatefulWidget {
 
 class SliderMenuContainerState extends State<SliderMenuContainer>
     with TickerProviderStateMixin {
-  double _slideBarXOffset = 0;
-  double _slideBarYOffset = 0;
-  bool _isSlideBarOpen = false;
-
-  // AnimationController _animationButtonController;
   AnimationController _animationDrawerController;
   Animation animation;
 
@@ -71,67 +66,24 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   /// check whether drawer is open
   bool get isDrawerOpen => _animationDrawerController.isCompleted;
 
+  AnimationController get animationController => _animationDrawerController;
+
   /// Toggle drawer
   void toggle() {
     _animationDrawerController.isCompleted
         ? _animationDrawerController.reverse()
         : _animationDrawerController.forward();
-    /*setState(() {
-      _isSlideBarOpen
-          ? _animationButtonController.reverse()
-          : _animationButtonController.forward();
-      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
-          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
-        _slideBarXOffset = _isSlideBarOpen
-            ? widget.sliderMenuCloseOffset
-            : widget.sliderMenuOpenOffset;
-      } else {
-        _slideBarYOffset = _isSlideBarOpen
-            ? widget.sliderMenuCloseOffset
-            : widget.sliderMenuOpenOffset;
-      }
-
-      _isSlideBarOpen = !_isSlideBarOpen;
-    });*/
   }
 
   /// Open drawer
-  void openDrawer() {
-    _animationDrawerController.forward();
-    /*setState(() {
-      _animationButtonController.forward();
-      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
-          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
-        _slideBarXOffset = widget.sliderMenuOpenOffset;
-      } else {
-        _slideBarYOffset = widget.sliderMenuOpenOffset;
-      }
-      _isSlideBarOpen = true;
-    });*/
-  }
+  void openDrawer() => _animationDrawerController.forward();
 
   /// Close drawer
-  void closeDrawer() {
-    _animationDrawerController.reverse();
-    /* setState(() {
-      _animationButtonController.reverse();
-      if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
-          widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
-        _slideBarXOffset = widget.sliderMenuCloseOffset;
-      } else {
-        _slideBarYOffset = widget.sliderMenuCloseOffset;
-      }
-      _isSlideBarOpen = false;
-    });*/
-  }
+  void closeDrawer() => _animationDrawerController.reverse();
 
   @override
   void initState() {
     super.initState();
-    /*  _animationButtonController = AnimationController(
-        vsync: this,
-        duration:
-            Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds));*/
 
     _animationDrawerController = AnimationController(
         vsync: this,

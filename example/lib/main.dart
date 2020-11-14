@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   GlobalKey<SliderMenuContainerState> _key =
-      new GlobalKey<SliderMenuContainerState>();
+  new GlobalKey<SliderMenuContainerState>();
   String title;
 
   @override
@@ -36,9 +36,7 @@ class _MyAppState extends State<MyApp> {
             appBarPadding: const EdgeInsets.only(top: 20),
             sliderMenuOpenSize: 200,
             sliderMenuCloseSize: 60,
-        //    slideDirection: SlideDirection.TOP_TO_BOTTOM,
             appBarHeight: 60,
-          //  isShadow: true,
             title: Text(
               title,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
