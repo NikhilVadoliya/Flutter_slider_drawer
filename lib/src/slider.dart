@@ -1,12 +1,13 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 class SliderMenuContainer extends StatefulWidget {
   final Widget sliderMenu;
   final Widget sliderMain;
-  final int sliderAnimationTimeInMilliseconds;
-  final double sliderMenuOpenOffset;
-  final double sliderMenuCloseOffset;
+  final int animationDuration;
+  final double sliderMenuOpenSize;
+  final double sliderMenuCloseSize;
 
   final Color drawerIconColor;
   final Widget drawerIcon;
@@ -23,14 +24,14 @@ class SliderMenuContainer extends StatefulWidget {
   final Widget trailing;
   final Color appBarColor;
   final EdgeInsets appBarPadding;
-  final SliderOpen sliderOpen;
+  final SlideDirection slideDirection;
 
   const SliderMenuContainer({
     Key key,
     this.sliderMenu,
     this.sliderMain,
-    this.sliderAnimationTimeInMilliseconds = 200,
-    this.sliderMenuOpenOffset = 265,
+    this.animationDuration = 200,
+    this.sliderMenuOpenSize = 265,
     this.drawerIconColor = Colors.black,
     this.drawerIcon,
     this.splashColor,
@@ -41,8 +42,8 @@ class SliderMenuContainer extends StatefulWidget {
     this.title,
     this.drawerIconSize = 27,
     this.appBarHeight,
-    this.sliderMenuCloseOffset = 0,
-    this.sliderOpen = SliderOpen.LEFT_TO_RIGHT,
+    this.sliderMenuCloseSize = 0,
+    this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
     this.isShadow = false,
     this.shadowColor = Colors.grey,
     this.shadowBlurRadius = 25.0,
@@ -56,23 +57,29 @@ class SliderMenuContainer extends StatefulWidget {
 }
 
 class SliderMenuContainerState extends State<SliderMenuContainer>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   double _slideBarXOffset = 0;
   double _slideBarYOffset = 0;
   bool _isSlideBarOpen = false;
-  AnimationController _animationController;
+
+  // AnimationController _animationButtonController;
+  AnimationController _animationDrawerController;
+  Animation animation;
 
   Widget drawerIcon;
 
   /// check whether drawer is open
-  bool get isDrawerOpen => _isSlideBarOpen;
+  bool get isDrawerOpen => _animationDrawerController.isCompleted;
 
   /// Toggle drawer
   void toggle() {
-    setState(() {
+    _animationDrawerController.isCompleted
+        ? _animationDrawerController.reverse()
+        : _animationDrawerController.forward();
+    /*setState(() {
       _isSlideBarOpen
-          ? _animationController.reverse()
-          : _animationController.forward();
+          ? _animationButtonController.reverse()
+          : _animationButtonController.forward();
       if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
           widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
         _slideBarXOffset = _isSlideBarOpen
@@ -85,13 +92,14 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       }
 
       _isSlideBarOpen = !_isSlideBarOpen;
-    });
+    });*/
   }
 
   /// Open drawer
   void openDrawer() {
-    setState(() {
-      _animationController.forward();
+    _animationDrawerController.forward();
+    /*setState(() {
+      _animationButtonController.forward();
       if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
           widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
         _slideBarXOffset = widget.sliderMenuOpenOffset;
@@ -99,13 +107,14 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         _slideBarYOffset = widget.sliderMenuOpenOffset;
       }
       _isSlideBarOpen = true;
-    });
+    });*/
   }
 
   /// Close drawer
   void closeDrawer() {
-    setState(() {
-      _animationController.reverse();
+    _animationDrawerController.reverse();
+    /* setState(() {
+      _animationButtonController.reverse();
       if (widget.sliderOpen == SliderOpen.LEFT_TO_RIGHT ||
           widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
         _slideBarXOffset = widget.sliderMenuCloseOffset;
@@ -113,17 +122,27 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         _slideBarYOffset = widget.sliderMenuCloseOffset;
       }
       _isSlideBarOpen = false;
-    });
+    });*/
   }
 
   @override
   void initState() {
     super.initState();
-
-    _animationController = AnimationController(
+    /*  _animationButtonController = AnimationController(
         vsync: this,
         duration:
-            Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds));
+            Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds));*/
+
+    _animationDrawerController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: widget.animationDuration));
+
+    animation = Tween<double>(
+            begin: widget.sliderMenuCloseSize, end: widget.sliderMenuOpenSize)
+        .animate(CurvedAnimation(
+            parent: _animationDrawerController,
+            curve: Curves.easeIn,
+            reverseCurve: Curves.easeOut));
   }
 
   @override
@@ -133,38 +152,49 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       /// Display Menu
       menuWidget(),
 
-      /// Displaying the  shadow
+      /// Dev -Displaying the  shadow
       if (widget.isShadow) ...[
-        AnimatedContainer(
-          duration:
-              Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds),
-          curve: Curves.easeIn,
-          width: double.infinity,
-          height: double.infinity,
-          transform: getTranslationValuesForShadow(widget.sliderOpen),
-          decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
-            BoxShadow(
-              color: widget.shadowColor,
-              blurRadius: widget.shadowBlurRadius, // soften the shadow
-              spreadRadius: widget.shadowSpreadRadius, //extend the shadow
-              offset: Offset(
-                15.0, // Move to right 10  horizontally
-                15.0, // Move to bottom 10 Vertically
-              ),
-            )
-          ]),
+        AnimatedBuilder(
+          animation: _animationDrawerController,
+          builder: (anim, child) {
+            return Transform.translate(
+              offset: getOffsetValueForShadow(
+                  widget.slideDirection, animation.value),
+              child: child,
+            );
+            return child;
+          },
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
+              BoxShadow(
+                color: widget.shadowColor,
+                blurRadius: widget.shadowBlurRadius, // soften the shadow
+                spreadRadius: widget.shadowSpreadRadius, //extend the shadow
+                offset: Offset(
+                  15.0, // Move to right 10  horizontally
+                  15.0, // Move to bottom 10 Vertically
+                ),
+              )
+            ]),
+          ),
         ),
       ],
 
-      /// Display Main Screen
-      AnimatedContainer(
-          duration:
-              Duration(milliseconds: widget.sliderAnimationTimeInMilliseconds),
-          curve: Curves.easeIn,
+      //Dev- Display Main Screen
+      AnimatedBuilder(
+        animation: _animationDrawerController,
+        builder: (anim, child) {
+          return Transform.translate(
+            offset: getOffsetValues(widget.slideDirection, animation.value),
+            child: child,
+          );
+        },
+        child: Container(
           width: double.infinity,
           height: double.infinity,
-            color: widget.appBarColor,
-          transform: getTranslationValues(widget.sliderOpen),
+          color: widget.appBarColor,
           child: Column(
             children: <Widget>[
               Container(
@@ -176,7 +206,9 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
               ),
               Expanded(child: widget.sliderMain),
             ],
-          )),
+          ),
+        ),
+      ),
     ]));
   }
 
@@ -189,10 +221,8 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
                   icon: AnimatedIcons.menu_close,
                   color: widget.drawerIconColor,
                   size: widget.drawerIconSize,
-                  progress: _animationController),
-              onPressed: () {
-                toggle();
-              }),
+                  progress: _animationDrawerController),
+              onPressed: () => toggle()),
       Expanded(
         child: widget.isTitleCenter
             ? Center(
@@ -206,7 +236,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
           )
     ];
 
-    if (widget.sliderOpen == SliderOpen.RIGHT_TO_LEFT) {
+    if (widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) {
       return list.reversed.toList();
     }
     return list;
@@ -214,30 +244,30 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
 
   /// Build and Align the Menu widget based on the slide open type
   menuWidget() {
-    switch (widget.sliderOpen) {
-      case SliderOpen.LEFT_TO_RIGHT:
+    switch (widget.slideDirection) {
+      case SlideDirection.LEFT_TO_RIGHT:
         return Container(
-          width: widget.sliderMenuOpenOffset,
+          width: widget.sliderMenuOpenSize,
           child: widget.sliderMenu,
         );
         break;
-      case SliderOpen.RIGHT_TO_LEFT:
+      case SlideDirection.RIGHT_TO_LEFT:
         return Positioned(
           right: 0,
           top: 0,
           bottom: 0,
           child: Container(
-            width: widget.sliderMenuOpenOffset,
+            width: widget.sliderMenuOpenSize,
             child: widget.sliderMenu,
           ),
         );
-      case SliderOpen.TOP_TO_BOTTOM:
+      case SlideDirection.TOP_TO_BOTTOM:
         return Positioned(
           right: 0,
           left: 0,
           top: 0,
           child: Container(
-            width: widget.sliderMenuOpenOffset,
+            width: widget.sliderMenuOpenSize,
             child: widget.sliderMenu,
           ),
         );
@@ -246,46 +276,38 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   }
 
   ///
-  /// This method get Matrix4 data base on [sliderOpen] type
+  /// This method get Offset base on [sliderOpen] type
   ///
 
-  Matrix4 getTranslationValues(SliderOpen sliderOpen) {
-    switch (sliderOpen) {
-      case SliderOpen.LEFT_TO_RIGHT:
-        return Matrix4.translationValues(
-            _slideBarXOffset, _slideBarYOffset, 1.0);
-      case SliderOpen.RIGHT_TO_LEFT:
-        return Matrix4.translationValues(
-            -_slideBarXOffset, _slideBarYOffset, 1.0);
-
-      case SliderOpen.TOP_TO_BOTTOM:
-        return Matrix4.translationValues(0, _slideBarYOffset, 1.0);
-
+  Offset getOffsetValues(SlideDirection direction, double value) {
+    switch (direction) {
+      case SlideDirection.LEFT_TO_RIGHT:
+        return Offset(value, 0);
+      case SlideDirection.RIGHT_TO_LEFT:
+        return Offset(-value, 0);
+      case SlideDirection.TOP_TO_BOTTOM:
+        return Offset(0, value);
       default:
-        return Matrix4.translationValues(0, 0, 1.0);
+        return Offset(value, 0);
     }
   }
 
-  Matrix4 getTranslationValuesForShadow(SliderOpen sliderOpen) {
-    switch (sliderOpen) {
-      case SliderOpen.LEFT_TO_RIGHT:
-        return Matrix4.translationValues(
-            _slideBarXOffset - 30, _slideBarYOffset, 1.0);
-      case SliderOpen.RIGHT_TO_LEFT:
-        return Matrix4.translationValues(
-            -_slideBarXOffset - 5, _slideBarYOffset, 1.0);
-
-      case SliderOpen.TOP_TO_BOTTOM:
-        return Matrix4.translationValues(0, _slideBarYOffset - 20, 1.0);
-
+  Offset getOffsetValueForShadow(SlideDirection direction, double value) {
+    switch (direction) {
+      case SlideDirection.LEFT_TO_RIGHT:
+        return Offset(value - (widget.sliderMenuOpenSize > 50 ? 20 : 10), 0);
+      case SlideDirection.RIGHT_TO_LEFT:
+        return Offset(-value - 5, 0);
+      case SlideDirection.TOP_TO_BOTTOM:
+        return Offset(0, value - (widget.sliderMenuOpenSize > 50 ? 15 : 5));
       default:
-        return Matrix4.translationValues(0, 0, 1.0);
+        return Offset(value - 30.0, 0);
     }
   }
 
   @override
   void dispose() {
     super.dispose();
-    _animationController.dispose();
+    _animationDrawerController.dispose();
   }
 }

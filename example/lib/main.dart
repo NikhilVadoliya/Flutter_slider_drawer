@@ -34,8 +34,11 @@ class _MyAppState extends State<MyApp> {
             appBarColor: Colors.white,
             key: _key,
             appBarPadding: const EdgeInsets.only(top: 20),
-            sliderMenuOpenOffset: 250,
+            sliderMenuOpenSize: 200,
+            sliderMenuCloseSize: 60,
+        //    slideDirection: SlideDirection.TOP_TO_BOTTOM,
             appBarHeight: 60,
+          //  isShadow: true,
             title: Text(
               title,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
