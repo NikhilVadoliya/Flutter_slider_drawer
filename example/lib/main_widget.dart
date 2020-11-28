@@ -27,8 +27,11 @@ class _MainWidgetState extends State<MainWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.all(20),
       child: ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          scrollDirection: Axis.vertical,
+       //   physics: BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           itemBuilder: (builder, index) {
             return LimitedBox(
               maxHeight: 150,
