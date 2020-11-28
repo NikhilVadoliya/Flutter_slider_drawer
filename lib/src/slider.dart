@@ -133,7 +133,6 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
                     animation.value, widget.sliderMenuOpenSize),
                 child: child,
               );
-              return child;
             },
             child: Container(
               width: double.infinity,

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-import 'dart:async';
-
 import 'main_widget.dart';
 import 'menu_widget.dart';
 
@@ -30,26 +28,23 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(top: 0),
-          child: SliderMenuContainer(
-              appBarColor: Colors.white,
-              key: _key,
-              sliderMenuOpenSize: 200,
-              title: Text(
-                title,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-              ),
-              sliderMenu: MenuWidget(
-                onItemClick: (title) {
-                  _key.currentState.closeDrawer();
-                  setState(() {
-                    this.title = title;
-                  });
-                },
-              ),
-              sliderMain: MainWidget()),
-        ),
+        body: SliderMenuContainer(
+            appBarColor: Colors.white,
+            key: _key,
+            sliderMenuOpenSize: 200,
+            title: Text(
+              title,
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+            ),
+            sliderMenu: MenuWidget(
+              onItemClick: (title) {
+                _key.currentState.closeDrawer();
+                setState(() {
+                  this.title = title;
+                });
+              },
+            ),
+            sliderMain: MainWidget()),
       ),
     );
   }
