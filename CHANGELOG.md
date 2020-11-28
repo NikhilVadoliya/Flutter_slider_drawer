@@ -1,4 +1,13 @@
-## [1.0.3] - Release 
+## [1.2.0] - Release
+
+ * Implement swipe to open feature for sliderDirection LEFT_TO_RIGHT and RIGHT_TO_LEFT
+ * Deprecate parameter `sliderMenuOpenOffset` and `sliderMenuCloseOffset`. You can use `sliderMenuOpenSize` and `sliderMenuCloseSize`.
+ * Deprecate parameter `sliderOpen`. You can use `slideDirection`
+ * Deprecate parameter `sliderAnimationTimeInMilliseconds`. You can use `animationDuration`
+ * You can access `animationController` by key.
+ * Bug fixed
+
+## [1.0.3] - Release
 
  * Added TopToBottom slide feature
  * Added Shadow feature with shadowColor,shadowBlurRadius and shadowSpread dynamic handle
