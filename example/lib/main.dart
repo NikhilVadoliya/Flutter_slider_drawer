@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   GlobalKey<SliderMenuContainerState> _key =
-  new GlobalKey<SliderMenuContainerState>();
+      new GlobalKey<SliderMenuContainerState>();
   String title;
 
   @override
@@ -30,26 +30,26 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: SliderMenuContainer(
-            appBarColor: Colors.white,
-            key: _key,
-            appBarPadding: const EdgeInsets.only(top: 20),
-            sliderMenuOpenSize: 200,
-            sliderMenuCloseSize: 60,
-            appBarHeight: 60,
-            title: Text(
-              title,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-            ),
-            sliderMenu: MenuWidget(
-              onItemClick: (title) {
-                _key.currentState.closeDrawer();
-                setState(() {
-                  this.title = title;
-                });
-              },
-            ),
-            sliderMain: MainWidget()),
+        body: Padding(
+          padding: const EdgeInsets.only(top: 0),
+          child: SliderMenuContainer(
+              appBarColor: Colors.white,
+              key: _key,
+              sliderMenuOpenSize: 200,
+              title: Text(
+                title,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+              ),
+              sliderMenu: MenuWidget(
+                onItemClick: (title) {
+                  _key.currentState.closeDrawer();
+                  setState(() {
+                    this.title = title;
+                  });
+                },
+              ),
+              sliderMain: MainWidget()),
+        ),
       ),
     );
   }
