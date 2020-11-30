@@ -29,7 +29,8 @@ class SliderAppBar extends StatelessWidget {
       this.title,
       this.isTitleCenter,
       this.trailing,
-      this.slideDirection, this.appBarHeight})
+      this.slideDirection,
+      this.appBarHeight})
       : super(key: key);
 
   @override
