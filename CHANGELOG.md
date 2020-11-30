@@ -1,3 +1,7 @@
+## [1.2.1] - Release
+
+ * Improve code document
+
 ## [1.2.0] - Release
 
  * Implement swipe to open feature for sliderDirection **LEFT_TO_RIGHT** and **RIGHT_TO_LEFT**.

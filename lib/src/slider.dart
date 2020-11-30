@@ -5,36 +5,141 @@ import 'package:flutter_slider_drawer/src/menu_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/utils.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
+/// SliderMenuContainer which have two [sliderMain] and [sliderMenu] parameter
+///
+///For Example :
+///
+/// SliderMenuContainer(
+///           appBarColor: Colors.white,
+///             sliderMenuOpenSize: 200,
+///             title: Text(
+///               title,
+///               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+///             ),
+///             sliderMenu: MenuWidget(
+///               onItemClick: (title) {
+///                 _key.currentState.closeDrawer();
+///                 setState(() {
+///                   this.title = title;
+///                });
+///               },
+///             ),
+///             sliderMain: MainWidget())
+///
+///
+///
 class SliderMenuContainer extends StatefulWidget {
+
+  /// [Widget] which display when user open drawer
+  ///
   final Widget sliderMenu;
+
+  /// [Widget] main screen widget
+  ///
   final Widget sliderMain;
+
+  /// [int] you can changes sliderDrawer open/close animation times with this [animationDuration]
+  /// parameter
+  ///
   final int animationDuration;
+
+  /// [double] you can change open drawer size by this parameter [sliderMenuOpenSize]
+  ///
   final double sliderMenuOpenSize;
+
+  ///[double] you can change close drawer size by this parameter [sliderMenuCloseSize]
+  /// by Default it is 0. if you set 30 then drawer will not close full it will display 30 size of width always
+  ///
   final double sliderMenuCloseSize;
+
+  ///[bool] if you set [false] then swipe to open feature disable.
+  ///By Default it's true
+  ///
   final bool isDraggable;
 
+  ///[bool] if you set [false] then it will not display app bar
+  ///
   final bool hasAppBar;
+
+  ///[Color] you can change drawer icon by this parameter [drawerIconColor]
+  ///
   final Color drawerIconColor;
+
+  ///[Widget] you can change drawer icon by this parameter [drawerIcon]
+  ///
   final Widget drawerIcon;
+
+  ///[double] you can change drawer icon size by this parameter [drawerIconSize]
+  ///
   final double drawerIconSize;
+
+  /// The primary color of the button when the drawer button is in the down (pressed) state.
+  /// The splash is represented as a circular overlay that appears above the
+  /// [highlightColor] overlay. The splash overlay has a center point that matches
+  /// the hit point of the user touch event. The splash overlay will expand to
+  /// fill the button area if the touch is held for long enough time. If the splash
+  /// color has transparency then the highlight and drawer button color will show through.
+  ///
+  /// Defaults to the Theme's splash color, [ThemeData.splashColor].
+  ///
   final Color splashColor;
+
+  /// [double] you can change appBar height by this parameter [appBarHeight]
+  ///
   final double appBarHeight;
+
+  /// [Widget] you can set appbar title by this parameter [title]
+  ///
   final Widget title;
+
+  ///[bool] you can set title in center by this parameter
+  /// By default it's [true]
+  ///
   final bool isTitleCenter;
+
+  ///[bool] you can enable shadow of [sliderMain] Widget by this parameter
+  ///By default it's [false]
+  ///
   final bool isShadow;
+
+  ///[Color] you can change shadow color by this parameter [shadowColor]
+  ///
   final Color shadowColor;
+
+  ///[double] you can change blurRadius of shadow by this parameter [shadowBlurRadius]
+  ///
   final double shadowBlurRadius;
+
+  ///[double] you can change spreadRadius of shadow by this parameter [shadowSpreadRadius]
+  ///
   final double shadowSpreadRadius;
 
+  ///[Widget] you can set trailing of appbar by this parameter [trailing]
+  ///
   final Widget trailing;
+
+  ///[Color] you can change appbar color by this parameter [appBarColor]
+  ///
   final Color appBarColor;
+
+  ///[EdgeInsets] you can change appBarPadding by this parameter [appBarPadding]
+  ///
   final EdgeInsets appBarPadding;
+
+  ///[slideDirection] you can change slide direction by this parameter [slideDirection]
+  ///There are three type of [SlideDirection]
+  ///[SlideDirection.RIGHT_TO_LEFT]
+  ///[SlideDirection.LEFT_TO_RIGHT]
+  ///[SlideDirection.TOP_TO_BOTTOM]
+  ///
+  /// By default it's [SlideDirection.LEFT_TO_RIGHT]
+  ///
   final SlideDirection slideDirection;
 
   const SliderMenuContainer({
     Key key,
-    this.sliderMenu,
-    this.sliderMain,
+    @required this.sliderMenu,
+    @required this.sliderMain,
     this.isDraggable = true,
     this.animationDuration = 200,
     this.sliderMenuOpenSize = 265,
