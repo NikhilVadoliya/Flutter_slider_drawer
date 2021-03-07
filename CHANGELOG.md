@@ -1,3 +1,7 @@
+## [2.0.0] - Release
+
+ * Added null safety 
+
 ## [1.2.1] - Release
 
  * Improve code document

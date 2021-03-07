@@ -19,14 +19,16 @@ class SliderAppBar extends StatelessWidget {
   const SliderAppBar(
       {Key? key,
       this.appBarPadding = const EdgeInsets.only(top: 24),
-      this.appBarColor = Colors.blue, this.drawerIcon,
+      this.appBarColor = Colors.blue,
+      this.drawerIcon,
       this.splashColor = Colors.black,
       this.drawerIconColor = Colors.black87,
       this.drawerIconSize = 27,
       required this.animationController,
       required this.onTap,
       required this.title,
-      required this.isTitleCenter, this.trailing,
+      required this.isTitleCenter,
+      this.trailing,
       required this.slideDirection,
       required this.appBarHeight})
       : super(key: key);
