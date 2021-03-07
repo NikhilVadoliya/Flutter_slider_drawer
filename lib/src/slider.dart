@@ -29,7 +29,6 @@ import 'package:flutter_slider_drawer/src/slider_direction.dart';
 ///
 ///
 class SliderMenuContainer extends StatefulWidget {
-
   /// [Widget] which display when user open drawer
   ///
   final Widget sliderMenu;
@@ -67,7 +66,7 @@ class SliderMenuContainer extends StatefulWidget {
 
   ///[Widget] you can change drawer icon by this parameter [drawerIcon]
   ///
-  final Widget drawerIcon;
+  final Widget? drawerIcon;
 
   ///[double] you can change drawer icon size by this parameter [drawerIconSize]
   ///
@@ -116,7 +115,7 @@ class SliderMenuContainer extends StatefulWidget {
 
   ///[Widget] you can set trailing of appbar by this parameter [trailing]
   ///
-  final Widget trailing;
+  final Widget? trailing;
 
   ///[Color] you can change appbar color by this parameter [appBarColor]
   ///
@@ -124,7 +123,7 @@ class SliderMenuContainer extends StatefulWidget {
 
   ///[EdgeInsets] you can change appBarPadding by this parameter [appBarPadding]
   ///
-  final EdgeInsets appBarPadding;
+  final EdgeInsets? appBarPadding;
 
   ///[slideDirection] you can change slide direction by this parameter [slideDirection]
   ///There are three type of [SlideDirection]
@@ -137,20 +136,20 @@ class SliderMenuContainer extends StatefulWidget {
   final SlideDirection slideDirection;
 
   const SliderMenuContainer({
-    Key key,
-    @required this.sliderMenu,
-    @required this.sliderMain,
+    Key? key,
+    required this.sliderMenu,
+    required this.sliderMain,
     this.isDraggable = true,
     this.animationDuration = 200,
     this.sliderMenuOpenSize = 265,
     this.drawerIconColor = Colors.black,
     this.drawerIcon,
-    this.splashColor,
+    this.splashColor = Colors.transparent,
     this.isTitleCenter = true,
     this.trailing,
     this.appBarColor = Colors.white,
-    this.appBarPadding,
-    this.title,
+    this.appBarPadding = const EdgeInsets.only(top: 24),
+    this.title = const Text('AppBar'),
     this.drawerIconSize = 27,
     this.appBarHeight = 70,
     this.sliderMenuCloseSize = 0,
@@ -160,9 +159,7 @@ class SliderMenuContainer extends StatefulWidget {
     this.shadowBlurRadius = 25.0,
     this.shadowSpreadRadius = 5.0,
     this.hasAppBar = true,
-  })  : assert(sliderMenu != null),
-        assert(sliderMain != null),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   SliderMenuContainerState createState() => SliderMenuContainerState();
@@ -176,29 +173,29 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   double slideAmount = 0.0;
   double _percent = 0.0;
 
-  AnimationController _animationDrawerController;
-  Animation animation;
+  AnimationController? _animationDrawerController;
+  late Animation animation;
 
   bool dragging = false;
 
-  Widget drawerIcon;
+  Widget? drawerIcon;
 
   /// check whether drawer is open
-  bool get isDrawerOpen => _animationDrawerController.isCompleted;
+  bool get isDrawerOpen => _animationDrawerController!.isCompleted;
 
   /// it's provide [animationController] for handle and lister drawer animation
-  AnimationController get animationController => _animationDrawerController;
+  AnimationController? get animationController => _animationDrawerController;
 
   /// Toggle drawer
-  void toggle() => _animationDrawerController.isCompleted
-      ? _animationDrawerController.reverse()
-      : _animationDrawerController.forward();
+  void toggle() => _animationDrawerController!.isCompleted
+      ? _animationDrawerController!.reverse()
+      : _animationDrawerController!.forward();
 
   /// Open drawer
-  void openDrawer() => _animationDrawerController.forward();
+  void openDrawer() => _animationDrawerController!.forward();
 
   /// Close drawer
-  void closeDrawer() => _animationDrawerController.reverse();
+  void closeDrawer() => _animationDrawerController!.reverse();
 
   @override
   void initState() {
@@ -211,7 +208,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
     animation = Tween<double>(
             begin: widget.sliderMenuCloseSize, end: widget.sliderMenuOpenSize)
         .animate(CurvedAnimation(
-            parent: _animationDrawerController,
+            parent: _animationDrawerController!,
             curve: Curves.easeIn,
             reverseCurve: Curves.easeOut));
   }
@@ -231,7 +228,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         /// Displaying the  shadow
         if (widget.isShadow) ...[
           AnimatedBuilder(
-            animation: _animationDrawerController,
+            animation: _animationDrawerController!,
             builder: (_, child) {
               return Transform.translate(
                 offset: Utils.getOffsetValueForShadow(widget.slideDirection,
@@ -261,7 +258,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
 
         //Display Main Screen
         AnimatedBuilder(
-          animation: _animationDrawerController,
+          animation: _animationDrawerController!,
           builder: (_, child) {
             return Transform.translate(
               offset:
@@ -286,15 +283,15 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
                       slideDirection: widget.slideDirection,
                       onTap: () => toggle(),
                       appBarHeight: widget.appBarHeight,
-                      animationController: _animationDrawerController,
+                      animationController: _animationDrawerController!,
                       appBarColor: widget.appBarColor,
-                      appBarPadding: widget.appBarPadding,
+                      appBarPadding: widget.appBarPadding!,
                       drawerIcon: widget.drawerIcon,
                       drawerIconColor: widget.drawerIconColor,
                       drawerIconSize: widget.drawerIconSize,
                       isTitleCenter: widget.isTitleCenter,
                       splashColor: widget.splashColor,
-                      title: widget.title ?? '',
+                      title: widget.title,
                       trailing: widget.trailing,
                     ),
                   Expanded(child: widget.sliderMain),
@@ -310,7 +307,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   @override
   void dispose() {
     super.dispose();
-    _animationDrawerController.dispose();
+    _animationDrawerController!.dispose();
   }
 
   void _onHorizontalDragStart(DragStartDetails detail) {
@@ -385,8 +382,8 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
 
   move(double percent) {
     _percent = percent;
-    _animationDrawerController.value = percent;
-    _animationDrawerController.notifyListeners();
+    _animationDrawerController!.value = percent;
+    _animationDrawerController!.notifyListeners();
   }
 
   openOrClose() {

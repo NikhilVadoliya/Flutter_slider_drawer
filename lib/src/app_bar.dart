@@ -4,7 +4,7 @@ import 'package:flutter_slider_drawer/src/slider_direction.dart';
 class SliderAppBar extends StatelessWidget {
   final EdgeInsets appBarPadding;
   final Color appBarColor;
-  final Widget drawerIcon;
+  final Widget? drawerIcon;
   final Color splashColor;
   final Color drawerIconColor;
   final double drawerIconSize;
@@ -13,31 +13,29 @@ class SliderAppBar extends StatelessWidget {
   final VoidCallback onTap;
   final Widget title;
   final bool isTitleCenter;
-  final Widget trailing;
+  final Widget? trailing;
   final SlideDirection slideDirection;
 
   const SliderAppBar(
-      {Key key,
-      this.appBarPadding,
-      this.appBarColor,
-      this.drawerIcon,
-      this.splashColor,
-      this.drawerIconColor,
-      this.drawerIconSize,
-      this.animationController,
-      this.onTap,
-      this.title,
-      this.isTitleCenter,
-      this.trailing,
-      this.slideDirection,
-      this.appBarHeight})
+      {Key? key,
+      this.appBarPadding = const EdgeInsets.only(top: 24),
+      this.appBarColor = Colors.blue, this.drawerIcon,
+      this.splashColor = Colors.black,
+      this.drawerIconColor = Colors.black87,
+      this.drawerIconSize = 27,
+      required this.animationController,
+      required this.onTap,
+      required this.title,
+      required this.isTitleCenter, this.trailing,
+      required this.slideDirection,
+      required this.appBarHeight})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: appBarHeight,
-      padding: appBarPadding ?? const EdgeInsets.only(top: 24),
+      padding: appBarPadding,
       color: appBarColor,
       child: Row(
         children: appBar(),
@@ -49,7 +47,7 @@ class SliderAppBar extends StatelessWidget {
     List<Widget> list = [
       drawerIcon ??
           IconButton(
-              splashColor: splashColor ?? Colors.black,
+              splashColor: splashColor,
               icon: AnimatedIcon(
                   icon: AnimatedIcons.menu_close,
                   color: drawerIconColor,

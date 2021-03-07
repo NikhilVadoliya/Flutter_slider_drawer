@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+
 import 'main_widget.dart';
 import 'menu_widget.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   GlobalKey<SliderMenuContainerState> _key =
       new GlobalKey<SliderMenuContainerState>();
-  String title;
+  late String title;
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _MyAppState extends State<MyApp> {
             ),
             sliderMenu: MenuWidget(
               onItemClick: (title) {
-                _key.currentState.closeDrawer();
+                _key.currentState!.closeDrawer();
                 setState(() {
                   this.title = title;
                 });

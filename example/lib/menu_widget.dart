@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
-  final Function(String) onItemClick;
+  final Function(String)? onItemClick;
 
-  const MenuWidget({Key key, this.onItemClick}) : super(key: key);
+  const MenuWidget({Key? key, this.onItemClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +60,6 @@ class MenuWidget extends StatelessWidget {
         color: Colors.black,
       ),
       onTap: () {
-        onItemClick(title);
+        onItemClick!(title);
       });
 }

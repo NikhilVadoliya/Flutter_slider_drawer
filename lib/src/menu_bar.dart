@@ -10,7 +10,10 @@ class SlideMenuBar extends StatelessWidget {
   final Widget sliderMenu;
 
   const SlideMenuBar(
-      {Key key, this.slideDirection, this.sliderMenuOpenSize, this.sliderMenu})
+      {Key? key,
+      required this.slideDirection,
+      required this.sliderMenuOpenSize,
+      required this.sliderMenu})
       : super(key: key);
 
   @override
@@ -22,13 +25,10 @@ class SlideMenuBar extends StatelessWidget {
     switch (slideDirection) {
       case SlideDirection.LEFT_TO_RIGHT:
         return container;
-        break;
       case SlideDirection.RIGHT_TO_LEFT:
         return Positioned(right: 0, top: 0, bottom: 0, child: container);
       case SlideDirection.TOP_TO_BOTTOM:
         return Positioned(right: 0, left: 0, top: 0, child: container);
-        break;
     }
-    return Container();
   }
 }
