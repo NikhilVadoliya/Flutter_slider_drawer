@@ -1,76 +1,68 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/src/app_bar.dart';
-import 'package:flutter_slider_drawer/src/menu_bar.dart';
+import 'package:flutter_slider_drawer/src/helper/slider_app_bar.dart';
+import 'package:flutter_slider_drawer/src/helper/slider_shadow.dart';
+import 'package:flutter_slider_drawer/src/slider_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/utils.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
-/// SliderMenuContainer which have two [sliderMain] and [sliderMenu] parameter
+/// SliderDrawer which have two [child] and [slider] parameter
 ///
 ///For Example :
 ///
-/// SliderMenuContainer(
-///           appBarColor: Colors.white,
-///             sliderMenuOpenSize: 200,
-///             title: Text(
-///               title,
-///               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-///             ),
-///             sliderMenu: MenuWidget(
+/// Scaffold(
+///         body: SliderDrawer(
+///             appBar: SliderAppBar(
+///                 appBarColor: Colors.white,
+///                 title: Text(title,
+///                     style: const TextStyle(
+///                         fontSize: 22, fontWeight: FontWeight.w700))),
+///             key: _key,
+///             sliderOpenSize: 200,
+///             slider: SliderView(
 ///               onItemClick: (title) {
-///                 _key.currentState.closeDrawer();
+///                 _key.currentState!.closeSlider();
 ///                 setState(() {
 ///                   this.title = title;
-///                });
+///                 });
 ///               },
 ///             ),
-///             sliderMain: MainWidget())
+///             child: AuthorList()),
+///       )
 ///
 ///
-///
-class SliderMenuContainer extends StatefulWidget {
+class SliderDrawer extends StatefulWidget {
   /// [Widget] which display when user open drawer
   ///
-  final Widget sliderMenu;
+  final Widget slider;
 
   /// [Widget] main screen widget
   ///
-  final Widget sliderMain;
+  final Widget child;
 
   /// [int] you can changes sliderDrawer open/close animation times with this [animationDuration]
   /// parameter
   ///
   final int animationDuration;
 
-  /// [double] you can change open drawer size by this parameter [sliderMenuOpenSize]
+  /// [double] you can change open drawer size by this parameter [sliderOpenSize]
   ///
-  final double sliderMenuOpenSize;
+  final double sliderOpenSize;
 
-  ///[double] you can change close drawer size by this parameter [sliderMenuCloseSize]
+  ///[double] you can change close drawer size by this parameter [sliderCloseSize]
   /// by Default it is 0. if you set 30 then drawer will not close full it will display 30 size of width always
   ///
-  final double sliderMenuCloseSize;
+  final double sliderCloseSize;
 
   ///[bool] if you set [false] then swipe to open feature disable.
   ///By Default it's true
   ///
   final bool isDraggable;
 
-  ///[bool] if you set [false] then it will not display app bar
+  ///[appBar] if you set [null] then it will not display app bar
   ///
-  final bool hasAppBar;
-
-  ///[Color] you can change drawer icon by this parameter [drawerIconColor]
-  ///
-  final Color drawerIconColor;
-
-  ///[Widget] you can change drawer icon by this parameter [drawerIcon]
-  ///
-  final Widget? drawerIcon;
-
-  ///[double] you can change drawer icon size by this parameter [drawerIconSize]
-  ///
-  final double drawerIconSize;
+  final SliderAppBar? appBar;
 
   /// The primary color of the button when the drawer button is in the down (pressed) state.
   /// The splash is represented as a circular overlay that appears above the
@@ -83,47 +75,8 @@ class SliderMenuContainer extends StatefulWidget {
   ///
   final Color splashColor;
 
-  /// [double] you can change appBar height by this parameter [appBarHeight]
-  ///
-  final double appBarHeight;
-
-  /// [Widget] you can set appbar title by this parameter [title]
-  ///
-  final Widget title;
-
-  ///[bool] you can set title in center by this parameter
-  /// By default it's [true]
-  ///
-  final bool isTitleCenter;
-
-  ///[bool] you can enable shadow of [sliderMain] Widget by this parameter
-  ///By default it's [false]
-  ///
-  final bool isShadow;
-
-  ///[Color] you can change shadow color by this parameter [shadowColor]
-  ///
-  final Color shadowColor;
-
-  ///[double] you can change blurRadius of shadow by this parameter [shadowBlurRadius]
-  ///
-  final double shadowBlurRadius;
-
-  ///[double] you can change spreadRadius of shadow by this parameter [shadowSpreadRadius]
-  ///
-  final double shadowSpreadRadius;
-
-  ///[Widget] you can set trailing of appbar by this parameter [trailing]
-  ///
-  final Widget? trailing;
-
-  ///[Color] you can change appbar color by this parameter [appBarColor]
-  ///
-  final Color appBarColor;
-
-  ///[EdgeInsets] you can change appBarPadding by this parameter [appBarPadding]
-  ///
-  final EdgeInsets? appBarPadding;
+  ///[SliderShadow] you can enable shadow of [child] Widget by this parameter
+  final SliderShadow? sliderShadow;
 
   ///[slideDirection] you can change slide direction by this parameter [slideDirection]
   ///There are three type of [SlideDirection]
@@ -135,50 +88,35 @@ class SliderMenuContainer extends StatefulWidget {
   ///
   final SlideDirection slideDirection;
 
-  const SliderMenuContainer({
+  const SliderDrawer({
     Key? key,
-    required this.sliderMenu,
-    required this.sliderMain,
+    required this.slider,
+    required this.child,
     this.isDraggable = true,
-    this.animationDuration = 200,
-    this.sliderMenuOpenSize = 265,
-    this.drawerIconColor = Colors.black,
-    this.drawerIcon,
+    this.animationDuration = 400,
+    this.sliderOpenSize = 265,
     this.splashColor = Colors.transparent,
-    this.isTitleCenter = true,
-    this.trailing,
-    this.appBarColor = Colors.white,
-    this.appBarPadding = const EdgeInsets.only(top: 24),
-    this.title = const Text('AppBar'),
-    this.drawerIconSize = 27,
-    this.appBarHeight = 70,
-    this.sliderMenuCloseSize = 0,
+    this.sliderCloseSize = 0,
     this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
-    this.isShadow = false,
-    this.shadowColor = Colors.grey,
-    this.shadowBlurRadius = 25.0,
-    this.shadowSpreadRadius = 5.0,
-    this.hasAppBar = true,
+    this.sliderShadow,
+    this.appBar = const SliderAppBar(),
   }) : super(key: key);
 
   @override
-  SliderMenuContainerState createState() => SliderMenuContainerState();
+  SliderDrawerState createState() => SliderDrawerState();
 }
 
-class SliderMenuContainerState extends State<SliderMenuContainer>
+class SliderDrawerState extends State<SliderDrawer>
     with TickerProviderStateMixin {
   static const double WIDTH_GESTURE = 50.0;
   static const double HEIGHT_GESTURE = 30.0;
   static const double BLUR_SHADOW = 20.0;
-  double slideAmount = 0.0;
   double _percent = 0.0;
 
   AnimationController? _animationDrawerController;
-  late Animation animation;
+  late Animation _animation;
 
-  bool dragging = false;
-
-  Widget? drawerIcon;
+  bool _isDragging = false;
 
   /// check whether drawer is open
   bool get isDrawerOpen => _animationDrawerController!.isCompleted;
@@ -191,11 +129,11 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
       ? _animationDrawerController!.reverse()
       : _animationDrawerController!.forward();
 
-  /// Open drawer
-  void openDrawer() => _animationDrawerController!.forward();
+  /// Open slider
+  void openSlider() => _animationDrawerController!.forward();
 
-  /// Close drawer
-  void closeDrawer() => _animationDrawerController!.reverse();
+  /// Close slider
+  void closeSlider() => _animationDrawerController!.reverse();
 
   @override
   void initState() {
@@ -205,12 +143,12 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         vsync: this,
         duration: Duration(milliseconds: widget.animationDuration));
 
-    animation = Tween<double>(
-            begin: widget.sliderMenuCloseSize, end: widget.sliderMenuOpenSize)
-        .animate(CurvedAnimation(
-            parent: _animationDrawerController!,
-            curve: Curves.easeIn,
-            reverseCurve: Curves.easeOut));
+    _animation =
+        Tween<double>(begin: widget.sliderCloseSize, end: widget.sliderOpenSize)
+            .animate(CurvedAnimation(
+                parent: _animationDrawerController!,
+                curve: Curves.decelerate,
+                reverseCurve: Curves.decelerate));
   }
 
   @override
@@ -218,51 +156,31 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
     return LayoutBuilder(builder: (context, constrain) {
       return Container(
           child: Stack(children: <Widget>[
-        /// Display Menu
-        SlideMenuBar(
+        ///  Menu
+        SliderBar(
           slideDirection: widget.slideDirection,
-          sliderMenu: widget.sliderMenu,
-          sliderMenuOpenSize: widget.sliderMenuOpenSize,
+          sliderMenu: widget.slider,
+          sliderMenuOpenSize: widget.sliderOpenSize,
         ),
 
         /// Displaying the  shadow
-        if (widget.isShadow) ...[
-          AnimatedBuilder(
-            animation: _animationDrawerController!,
-            builder: (_, child) {
-              return Transform.translate(
-                offset: Utils.getOffsetValueForShadow(widget.slideDirection,
-                    animation.value, widget.sliderMenuOpenSize),
-                child: child,
-              );
-            },
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
-                BoxShadow(
-                  color: widget.shadowColor,
-                  blurRadius: widget.shadowBlurRadius,
-                  // soften the shadow
-                  spreadRadius: widget.shadowSpreadRadius,
-                  //extend the shadow
-                  offset: Offset(
-                    15.0, // Move to right 15  horizontally
-                    15.0, // Move to bottom 15 Vertically
-                  ),
-                )
-              ]),
-            ),
+        if (widget.sliderShadow != null) ...[
+          _Shadow(
+            animationDrawerController: _animationDrawerController,
+            slideDirection: widget.slideDirection,
+            sliderOpenSize: widget.sliderOpenSize,
+            animation: _animation,
+            sliderShadow: widget.sliderShadow!,
           ),
         ],
 
-        //Display Main Screen
+        //Child
         AnimatedBuilder(
           animation: _animationDrawerController!,
           builder: (_, child) {
             return Transform.translate(
-              offset:
-                  Utils.getOffsetValues(widget.slideDirection, animation.value),
+              offset: Utils.getOffsetValues(
+                  widget.slideDirection, _animation.value),
               child: child,
             );
           },
@@ -275,26 +193,21 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: widget.appBarColor,
+              color: widget.appBar?.appBarColor ?? Colors.transparent,
               child: Column(
                 children: <Widget>[
-                  if (widget.hasAppBar)
-                    SliderAppBar(
+                  if (widget.appBar != null)
+                    SAppBar(
                       slideDirection: widget.slideDirection,
                       onTap: () => toggle(),
-                      appBarHeight: widget.appBarHeight,
                       animationController: _animationDrawerController!,
-                      appBarColor: widget.appBarColor,
-                      appBarPadding: widget.appBarPadding!,
-                      drawerIcon: widget.drawerIcon,
-                      drawerIconColor: widget.drawerIconColor,
-                      drawerIconSize: widget.drawerIconSize,
-                      isTitleCenter: widget.isTitleCenter,
+                      drawerIcon: widget.appBar!.drawerIcon,
+                      drawerIconColor: widget.appBar!.drawerIconColor,
+                      drawerIconSize: widget.appBar!.drawerIconSize,
                       splashColor: widget.splashColor,
-                      title: widget.title,
-                      trailing: widget.trailing,
+                      sliderAppBar: widget.appBar!,
                     ),
-                  Expanded(child: widget.sliderMain),
+                  Expanded(child: widget.child),
                 ],
               ),
             ),
@@ -322,24 +235,24 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         detail.localPosition.dy <= widget.appBarHeight*/
         ) {
       this.setState(() {
-        dragging = true;
+        _isDragging = true;
       });
     }
     //Check use start dragging from top edge / bottom edge then enable dragging
     if (widget.slideDirection == SlideDirection.TOP_TO_BOTTOM &&
         detail.localPosition.dy >= HEIGHT_GESTURE) {
       this.setState(() {
-        dragging = true;
+        _isDragging = true;
       });
     }
   }
 
   void _onHorizontalDragEnd(DragEndDetails detail) {
     if (!widget.isDraggable) return;
-    if (dragging) {
+    if (_isDragging) {
       openOrClose();
       setState(() {
-        dragging = false;
+        _isDragging = false;
       });
     }
   }
@@ -350,7 +263,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
   ) {
     if (!widget.isDraggable) return;
     // open drawer for left/right type drawer
-    if (dragging && widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
+    if (_isDragging && widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
         widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) {
       var globalPosition = detail.globalPosition.dx;
       globalPosition = globalPosition < 0 ? 0 : globalPosition;
@@ -376,7 +289,7 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
         (widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
             widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) &&
         detail.delta.dx < 15) {
-      closeDrawer();
+      closeSlider();
     }
   }
 
@@ -388,9 +301,58 @@ class SliderMenuContainerState extends State<SliderMenuContainer>
 
   openOrClose() {
     if (_percent > 0.3) {
-      openDrawer();
+      openSlider();
     } else {
-      closeDrawer();
+      closeSlider();
     }
+  }
+}
+
+class _Shadow extends StatelessWidget {
+  const _Shadow({
+    Key? key,
+    required AnimationController? animationDrawerController,
+    required this.animation,
+    required this.sliderShadow,
+    required this.slideDirection,
+    required this.sliderOpenSize,
+  })  : _animationDrawerController = animationDrawerController,
+        super(key: key);
+
+  final AnimationController? _animationDrawerController;
+  final Animation animation;
+  final SliderShadow sliderShadow;
+  final SlideDirection slideDirection;
+  final double sliderOpenSize;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _animationDrawerController!,
+      builder: (_, child) {
+        return Transform.translate(
+          offset: Utils.getOffsetValueForShadow(
+              slideDirection, animation.value, sliderOpenSize),
+          child: child,
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
+          BoxShadow(
+            color: sliderShadow.shadowColor,
+            blurRadius: sliderShadow.shadowBlurRadius,
+            // soften the shadow
+            spreadRadius: sliderShadow.shadowSpreadRadius,
+            //extend the shadow
+            offset: Offset(
+              15.0, // Move to right 15  horizontally
+              15.0, // Move to bottom 15 Vertically
+            ),
+          )
+        ]),
+      ),
+    );
   }
 }

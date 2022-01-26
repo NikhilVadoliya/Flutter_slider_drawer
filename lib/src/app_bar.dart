@@ -1,44 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:flutter_slider_drawer/src/helper/slider_app_bar.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
-class SliderAppBar extends StatelessWidget {
-  final EdgeInsets appBarPadding;
-  final Color appBarColor;
+class SAppBar extends StatelessWidget {
   final Widget? drawerIcon;
   final Color splashColor;
   final Color drawerIconColor;
   final double drawerIconSize;
-  final double appBarHeight;
   final AnimationController animationController;
   final VoidCallback onTap;
-  final Widget title;
-  final bool isTitleCenter;
-  final Widget? trailing;
   final SlideDirection slideDirection;
 
-  const SliderAppBar(
+  final SliderAppBar sliderAppBar;
+
+  const SAppBar(
       {Key? key,
-      this.appBarPadding = const EdgeInsets.only(top: 24),
-      this.appBarColor = Colors.blue,
       this.drawerIcon,
       this.splashColor = Colors.black,
       this.drawerIconColor = Colors.black87,
       this.drawerIconSize = 27,
       required this.animationController,
       required this.onTap,
-      required this.title,
-      required this.isTitleCenter,
-      this.trailing,
       required this.slideDirection,
-      required this.appBarHeight})
+      required this.sliderAppBar})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: appBarHeight,
-      padding: appBarPadding,
-      color: appBarColor,
+      height: sliderAppBar.appBarHeight,
+      padding: sliderAppBar.appBarPadding,
+      color: sliderAppBar.appBarColor,
       child: Row(
         children: appBar(),
       ),
@@ -57,13 +50,13 @@ class SliderAppBar extends StatelessWidget {
                   progress: animationController),
               onPressed: () => onTap()),
       Expanded(
-        child: isTitleCenter
+        child: sliderAppBar.isTitleCenter
             ? Center(
-                child: title,
+                child: sliderAppBar.title,
               )
-            : title,
+            : sliderAppBar.title,
       ),
-      trailing ??
+      sliderAppBar.trailing ??
           SizedBox(
             width: 35,
           )

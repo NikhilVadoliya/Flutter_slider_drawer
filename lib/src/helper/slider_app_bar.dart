@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+
+class SliderAppBar {
+  /// [double] you can change appBar height by this parameter [appBarHeight]
+  ///
+  final double appBarHeight;
+
+  /// [Widget] you can set appbar title by this parameter [title]
+  ///
+  final Widget title;
+
+  ///[bool] you can set title in center by this parameter
+  /// By default it's [true]
+  ///
+  final bool isTitleCenter;
+
+  ///[Color] you can change appbar color by this parameter [appBarColor]
+  ///
+  final Color appBarColor;
+
+  ///[EdgeInsets] you can change appBarPadding by this parameter [appBarPadding]
+  ///
+  final EdgeInsets? appBarPadding;
+
+  ///[Widget] you can set trailing of appbar by this parameter [trailing]
+  ///
+  final Widget? trailing;
+
+  ///[Color] you can change drawer icon by this parameter [drawerIconColor]
+  ///
+  final Color drawerIconColor;
+
+  ///[Widget] you can change drawer icon by this parameter [drawerIcon]
+  ///
+  final Widget? drawerIcon;
+
+  ///[double] you can change drawer icon size by this parameter [drawerIconSize]
+  ///
+  final double drawerIconSize;
+
+  const SliderAppBar({
+    this.appBarHeight = 70,
+    this.title = const Text('AppBar'),
+    this.isTitleCenter = true,
+    this.appBarColor = Colors.white,
+    this.appBarPadding = const EdgeInsets.only(top: 24),
+    this.trailing,
+    this.drawerIconColor = Colors.black,
+    this.drawerIcon,
+    this.drawerIconSize = 27,
+  });
+}

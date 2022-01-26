@@ -5,7 +5,7 @@
 
 A Flutter package with custom implementation of the Slider Drawer Menu 
 
-![Plugin example demo](demo.gif)
+![Plugin example demo](demo.gif)![Plugin example demo](slider_2.gif)
 
 
 
@@ -24,7 +24,7 @@ dependencies:
 # Features
 
   - Slider with custom animation time
-  - Provide Basic Appbar with customization of color, sizes and title
+  - Provide Basic Appbar with customization of color, size and title
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
   - Provide shadow of Main screen with customization of shadow colors,blurRadius and spreadRadius
@@ -33,27 +33,22 @@ dependencies:
 # Code 
 
 ```
- return SliderMenuContainer(
-        appBarColor: Colors.white,
-        key: _key,
-        sliderMenuOpenSize: 200,
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-        ),
-        sliderMenu: MenuWidget(
-          onItemClick: (title) {
-            _key.currentState.closeDrawer();
-            setState(() {
-              this.title = title;
-            });
-          },
-        ),
-        sliderMain: MainWidget());
-
+ Scaffold(
+           body: SliderDrawer(
+         key: _key,
+         appBar: SliderAppBar(
+             appBarColor: Colors.white,
+             title: Text(title,
+                 style: const TextStyle(
+                     fontSize: 22, fontWeight: FontWeight.w700))),
+         slider: Container(color: Colors.red),
+         child: Container(color: Colors.amber),
+       ))
  ```
- 
- 
+
+ ![slider_document](slider_d_1.png)
+ ![slider_document](slider_d_2.png)
+
  
  # Slider open  
 
@@ -67,28 +62,26 @@ dependencies:
 ### Controlling the drawer
 
 ```
-GlobalKey<SliderMenuContainerState> _key =
-      new GlobalKey<SliderMenuContainerState>();
+GlobalKey<SliderDrawerState> _key =
+      new GlobalKey<SliderDrawerState>();
   
    @override
   Widget build(BuildContext context) {
-  return SliderMenuContainer(
-              appBarColor: Colors.white,
-              key: _key,
-              sliderMenuOpenSize: 200,
-              sliderMenu: MenuWidget(
-                onItemClick: (title) {
-                  _key.currentState.closeDrawer();
-                  setState(() {
-                    this.title = title;
-                  });
-                },
-              ),
-              sliderMain: MainWidget()),
+   return Scaffold(
+             body: SliderDrawer(
+           key: _key,
+           appBar: SliderAppBar(
+               appBarColor: Colors.white,
+               title: Text(title,
+                   style: const TextStyle(
+                       fontSize: 22, fontWeight: FontWeight.w700))),
+           slider: Container(color: Colors.red),
+           child: Container(color: Colors.amber),
+         )),
       
 ```
 
-* Using the below methods for controll drawer .
+* Using the below methods to control drawer .
 ``` 
  _key.currentState.closeDrawer();
  _key.currentState.openDrawer();
@@ -96,7 +89,7 @@ GlobalKey<SliderMenuContainerState> _key =
  _key.currentState.isDrawerOpen();
 
  ```
-* Use below variable if you want to controlle animation.
+* Use below variable if you want to control animation.
 
 
 ``` _key.currentState.animationController```
@@ -105,4 +98,3 @@ License
 ----
 
 BSD 2-Clause License
-

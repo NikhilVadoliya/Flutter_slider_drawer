@@ -4,12 +4,12 @@ import 'package:flutter_slider_drawer/src/slider_direction.dart';
 ///
 /// Build and Align the Menu widget based on the slide open type
 ///
-class SlideMenuBar extends StatelessWidget {
+class SliderBar extends StatelessWidget {
   final SlideDirection slideDirection;
   final double sliderMenuOpenSize;
   final Widget sliderMenu;
 
-  const SlideMenuBar(
+  const SliderBar(
       {Key? key,
       required this.slideDirection,
       required this.sliderMenuOpenSize,
