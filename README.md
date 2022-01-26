@@ -5,7 +5,8 @@
 
 A Flutter package with custom implementation of the Slider Drawer Menu 
 
-![Plugin example demo](demo.gif)![Plugin example demo](slider_2.gif)
+![Plugin example demo](demo.gif)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="slider_2.gif" alt="drawing" width="250" height="481"/>
 
 
 
@@ -46,7 +47,15 @@ dependencies:
        ))
  ```
 
+</br>
+ </br>
+
  ![slider_document](slider_d_1.png)
+ </br>
+ </br>
+ </br>
+ </br>
+ 
  ![slider_document](slider_d_2.png)
 
  
