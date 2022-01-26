@@ -296,7 +296,7 @@ class SliderDrawerState extends State<SliderDrawer>
   move(double percent) {
     _percent = percent;
     _animationDrawerController!.value = percent;
-    _animationDrawerController!.notifyListeners();
+    //_animationDrawerController!.notifyListeners();
   }
 
   openOrClose() {
