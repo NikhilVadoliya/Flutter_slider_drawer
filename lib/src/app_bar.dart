@@ -23,12 +23,13 @@ class SAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> items = appBar();
     return Container(
       height: sliderAppBar.appBarHeight,
       padding: sliderAppBar.appBarPadding,
       color: sliderAppBar.appBarColor,
       child: Row(
-        children: appBar(),
+        children: items,
       ),
     );
   }
@@ -58,7 +59,7 @@ class SAppBar extends StatelessWidget {
     ];
 
     if (slideDirection == SlideDirection.RIGHT_TO_LEFT) {
-      return list.reversed.toList();
+      return List.from(list.reversed);
     }
     return list;
   }
