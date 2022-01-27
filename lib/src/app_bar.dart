@@ -4,10 +4,8 @@ import 'package:flutter_slider_drawer/src/helper/slider_app_bar.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
 class SAppBar extends StatelessWidget {
-  final Widget? drawerIcon;
   final Color splashColor;
-  final Color drawerIconColor;
-  final double drawerIconSize;
+
   final AnimationController animationController;
   final VoidCallback onTap;
   final SlideDirection slideDirection;
@@ -16,10 +14,7 @@ class SAppBar extends StatelessWidget {
 
   const SAppBar(
       {Key? key,
-      this.drawerIcon,
       this.splashColor = Colors.black,
-      this.drawerIconColor = Colors.black87,
-      this.drawerIconSize = 27,
       required this.animationController,
       required this.onTap,
       required this.slideDirection,
@@ -40,13 +35,13 @@ class SAppBar extends StatelessWidget {
 
   List<Widget> appBar() {
     List<Widget> list = [
-      drawerIcon ??
+      sliderAppBar.drawerIcon ??
           IconButton(
               splashColor: splashColor,
               icon: AnimatedIcon(
                   icon: AnimatedIcons.menu_close,
-                  color: drawerIconColor,
-                  size: drawerIconSize,
+                  color: sliderAppBar.drawerIconColor,
+                  size: sliderAppBar.drawerIconSize,
                   progress: animationController),
               onPressed: () => onTap()),
       Expanded(

@@ -62,7 +62,7 @@ class SliderDrawer extends StatefulWidget {
 
   ///[appBar] if you set [null] then it will not display app bar
   ///
-  final SliderAppBar? appBar;
+  final Widget? appBar;
 
   /// The primary color of the button when the drawer button is in the down (pressed) state.
   /// The splash is represented as a circular overlay that appears above the
@@ -153,6 +153,10 @@ class SliderDrawerState extends State<SliderDrawer>
 
   @override
   Widget build(BuildContext context) {
+    Color appBarColor = Colors.white;
+    if (widget.appBar is SliderAppBar) {
+      appBarColor = (widget.appBar as SliderAppBar).appBarColor;
+    }
     return LayoutBuilder(builder: (context, constrain) {
       return Container(
           child: Stack(children: <Widget>[
@@ -193,20 +197,19 @@ class SliderDrawerState extends State<SliderDrawer>
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: widget.appBar?.appBarColor ?? Colors.transparent,
+              color: appBarColor,
               child: Column(
                 children: <Widget>[
-                  if (widget.appBar != null)
+                  if (widget.appBar != null && widget.appBar is SliderAppBar)
                     SAppBar(
                       slideDirection: widget.slideDirection,
                       onTap: () => toggle(),
                       animationController: _animationDrawerController!,
-                      drawerIcon: widget.appBar!.drawerIcon,
-                      drawerIconColor: widget.appBar!.drawerIconColor,
-                      drawerIconSize: widget.appBar!.drawerIconSize,
                       splashColor: widget.splashColor,
-                      sliderAppBar: widget.appBar!,
+                      sliderAppBar: widget.appBar as SliderAppBar,
                     ),
+                  if (widget.appBar != null && widget.appBar is! SliderAppBar)
+                    widget.appBar!,
                   Expanded(child: widget.child),
                 ],
               ),
@@ -296,7 +299,6 @@ class SliderDrawerState extends State<SliderDrawer>
   move(double percent) {
     _percent = percent;
     _animationDrawerController!.value = percent;
-    //_animationDrawerController!.notifyListeners();
   }
 
   openOrClose() {
