@@ -29,22 +29,26 @@ dependencies:
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
   - Provide shadow of Main screen with customization of shadow colors,blurRadius and spreadRadius
-  - Provide RTL(RightToLeft),LTR(LeftToRight) and TTB(TopToBottom) slider open selection 
+  - Provide RTL(RightToLeft),LTR(LeftToRight) and TTB(TopToBottom) slider open selection
+  - Provide Custom Appbar support and you can also use plugin appBar with use of `SliderAppBar` widget
+
 
 # Code 
 
 ```
- Scaffold(
-           body: SliderDrawer(
-         key: _key,
-         appBar: SliderAppBar(
-             appBarColor: Colors.white,
-             title: Text(title,
-                 style: const TextStyle(
-                     fontSize: 22, fontWeight: FontWeight.w700))),
-         slider: Container(color: Colors.red),
-         child: Container(color: Colors.amber),
-       ))
+  Widget build(BuildContext context) {
+     return Scaffold(
+         body: SliderDrawer(
+           key: _key,
+           appBar: SliderAppBar(
+               appBarColor: Colors.white,
+               title: Text(title,
+                   style: const TextStyle(
+                       fontSize: 22, fontWeight: FontWeight.w700))),
+           slider: Container(color: Colors.red),
+           child: Container(color: Colors.amber),
+         ));
+   }
  ```
 
 </br>
@@ -58,7 +62,8 @@ dependencies:
  
  ![slider_document](slider_d_2.png)
 
- 
+ </br>
+ </br>
  # Slider open  
 
  | SliderOpen.LEFT_TO_RIGHT  | SliderOpen.RIGHT_TO_LEFT  | SliderOpen.TOP_TO_BOTTOM  |
@@ -67,26 +72,29 @@ dependencies:
  
  
  
- 
+ </br>
+
 ### Controlling the drawer
 
 ```
-GlobalKey<SliderDrawerState> _key =
-      new GlobalKey<SliderDrawerState>();
-  
-   @override
+class _MyAppState extends State<MyApp> {
+  GlobalKey<SliderDrawerState> _key = GlobalKey<SliderDrawerState>();
+
+  @override
   Widget build(BuildContext context) {
-   return Scaffold(
-             body: SliderDrawer(
-           key: _key,
-           appBar: SliderAppBar(
-               appBarColor: Colors.white,
-               title: Text(title,
-                   style: const TextStyle(
-                       fontSize: 22, fontWeight: FontWeight.w700))),
-           slider: Container(color: Colors.red),
-           child: Container(color: Colors.amber),
-         )),
+    return Scaffold(
+        body: SliderDrawer(
+      key: _key,
+      appBar: SliderAppBar(
+          appBarColor: Colors.white,
+          title: Text('Title',
+              style:
+                  const TextStyle(fontSize: 22, fontWeight: FontWeight.w700))),
+      slider: Container(color: Colors.red),
+      child: Container(color: Colors.amber),
+    ));
+  }
+}
       
 ```
 

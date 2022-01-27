@@ -88,19 +88,19 @@ class SliderDrawer extends StatefulWidget {
   ///
   final SlideDirection slideDirection;
 
-  const SliderDrawer({
-    Key? key,
-    required this.slider,
-    required this.child,
-    this.isDraggable = true,
-    this.animationDuration = 400,
-    this.sliderOpenSize = 265,
-    this.splashColor = Colors.transparent,
-    this.sliderCloseSize = 0,
-    this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
-    this.sliderShadow,
-    this.appBar = const SliderAppBar(),
-  }) : super(key: key);
+  const SliderDrawer(
+      {Key? key,
+      required this.slider,
+      required this.child,
+      this.isDraggable = true,
+      this.animationDuration = 400,
+      this.sliderOpenSize = 265,
+      this.splashColor = Colors.transparent,
+      this.sliderCloseSize = 0,
+      this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
+      this.sliderShadow,
+      this.appBar = const SliderAppBar()})
+      : super(key: key);
 
   @override
   SliderDrawerState createState() => SliderDrawerState();

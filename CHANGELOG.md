@@ -1,3 +1,8 @@
+## [2.1.1] - Release
+ * Provide custom appBar feature
+ * Slider LeftToRight and RightToLeft issue fixed
+
+
 ## [2.1.0] - Release
  * Code Refactor
  * Improve Documentation
@@ -10,13 +15,10 @@
  * replace `sliderMenuOpenSize` and `sliderMenuCloseSize` to `sliderOpenSize` and `sliderCloseSize`
  * replace `sliderMenu` and `sliderMain` to `slider` and `child`
  * replace `closeDrawer` and `openDrawer` to `closeSlider` and `openSlider`
- * replace `SliderMenuContainerState`  to `closeSlider`
+ * replace `SliderMenuContainerState`  to `SliderDrawerState`
  * replace `hasAppBar`  to 'appBar' : if you set `app:null` then it will hide
  * replace `isShadow`  to 'sliderShadow' : if you set `sliderShadow:null` then shadow will not come
    by default it's null
-
-
-
 
 
 
