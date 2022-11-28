@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SliderAppBar extends StatelessWidget {
   /// [double] you can change appBar height by this parameter [appBarHeight]
@@ -38,17 +38,17 @@ class SliderAppBar extends StatelessWidget {
   ///
   final double drawerIconSize;
 
+
+
   const SliderAppBar({
     this.appBarHeight = 70,
-    this.title = const Text(
-      'AppBar',
-      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
-    ),
+    this.title = const Text('AppBar',
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
     this.isTitleCenter = true,
-    this.appBarColor = Colors.white,
+    this.appBarColor = const Color(0xffffffff),
     this.appBarPadding = const EdgeInsets.only(top: 24),
     this.trailing,
-    this.drawerIconColor = Colors.black,
+    this.drawerIconColor = const Color(0xff2c2b2b),
     this.drawerIcon,
     this.drawerIconSize = 27,
   });

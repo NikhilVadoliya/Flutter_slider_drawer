@@ -1,6 +1,4 @@
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class SliderShadow {
   final Color shadowColor;
@@ -14,7 +12,7 @@ class SliderShadow {
   final double shadowSpreadRadius;
 
   SliderShadow(
-      {this.shadowColor = Colors.grey,
+      {this.shadowColor = const Color(0xFF9E9E9E),
       this.shadowBlurRadius = 25.0,
       this.shadowSpreadRadius = 5.0});
 }

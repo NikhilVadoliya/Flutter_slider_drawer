@@ -1,10 +1,9 @@
-import 'package:flutter/animation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_slider_drawer/src/app_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/slider_app_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/slider_shadow.dart';
-import 'package:flutter_slider_drawer/src/slider_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/utils.dart';
+import 'package:flutter_slider_drawer/src/slider_bar.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
 /// SliderDrawer which have two [child] and [slider] parameter
@@ -88,6 +87,10 @@ class SliderDrawer extends StatefulWidget {
   ///
   final SlideDirection slideDirection;
 
+  ///[bool] if you use CupertinoApp then it will true otherwise it will false
+  ///
+  final bool isCupertino;
+
   const SliderDrawer(
       {Key? key,
       required this.slider,
@@ -95,11 +98,12 @@ class SliderDrawer extends StatefulWidget {
       this.isDraggable = true,
       this.animationDuration = 400,
       this.sliderOpenSize = 265,
-      this.splashColor = Colors.transparent,
+      this.splashColor = const Color(0xffffff),
       this.sliderCloseSize = 0,
       this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
       this.sliderShadow,
-      this.appBar = const SliderAppBar()})
+      this.appBar = const SliderAppBar(),
+      this.isCupertino = false})
       : super(key: key);
 
   @override
@@ -134,6 +138,7 @@ class SliderDrawerState extends State<SliderDrawer>
 
   /// Close slider
   void closeSlider() => _animationDrawerController!.reverse();
+  Color _appBarColor = Color(0xffffffff);
 
   @override
   void initState() {
@@ -149,14 +154,13 @@ class SliderDrawerState extends State<SliderDrawer>
                 parent: _animationDrawerController!,
                 curve: Curves.decelerate,
                 reverseCurve: Curves.decelerate));
+    if (widget.appBar is SliderAppBar) {
+      _appBarColor = (widget.appBar as SliderAppBar).appBarColor;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Color appBarColor = Colors.white;
-    if (widget.appBar is SliderAppBar) {
-      appBarColor = (widget.appBar as SliderAppBar).appBarColor;
-    }
     return LayoutBuilder(builder: (context, constrain) {
       return Container(
           child: Stack(children: <Widget>[
@@ -197,11 +201,12 @@ class SliderDrawerState extends State<SliderDrawer>
             child: Container(
               width: double.infinity,
               height: double.infinity,
-              color: appBarColor,
+              color: _appBarColor,
               child: Column(
                 children: <Widget>[
                   if (widget.appBar != null && widget.appBar is SliderAppBar)
                     SAppBar(
+                      isCupertino: widget.isCupertino,
                       slideDirection: widget.slideDirection,
                       onTap: () => toggle(),
                       animationController: _animationDrawerController!,

@@ -31,6 +31,7 @@ dependencies:
   - Provide shadow of Main screen with customization of shadow colors,blurRadius and spreadRadius
   - Provide RTL(RightToLeft),LTR(LeftToRight) and TTB(TopToBottom) slider open selection
   - Provide Custom Appbar support and you can also use plugin appBar with use of `SliderAppBar` widget
+  - If you are using CupertinoApp then pass `isCupertino: true`
 
 
 # Code 
@@ -64,6 +65,8 @@ dependencies:
 
  </br>
  </br>
+
+
  # Slider open  
 
  | SliderOpen.LEFT_TO_RIGHT  | SliderOpen.RIGHT_TO_LEFT  | SliderOpen.TOP_TO_BOTTOM  |
