@@ -6,6 +6,7 @@ class Utils {
   ///
   /// This method get Offset base on [sliderOpen] type
   ///
+  Utils._();
 
   static Offset getOffsetValues(SlideDirection direction, double value) {
     switch (direction) {

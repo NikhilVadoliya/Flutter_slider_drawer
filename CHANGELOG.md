@@ -1,3 +1,8 @@
+## [2.1.2] - Release
+ * replace `sliderShadow` to `sliderBoxShadow`
+ * Slider RightToLeft : Gesture area issue fixed
+ * Fixed issue : #21 and #23
+
 ## [2.1.1] - Release
  * Provide custom appBar feature
  * Slider LeftToRight and RightToLeft issue fixed

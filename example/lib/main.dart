@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  GlobalKey<SliderDrawerState> _key = GlobalKey<SliderDrawerState>();
+class MyAppState extends State<MyApp> {
+  final GlobalKey<SliderDrawerState> _sliderDrawerKey =
+      GlobalKey<SliderDrawerState>();
   late String title;
 
   @override
@@ -23,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'BalsamiqSans'),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SliderDrawer(
@@ -31,11 +35,11 @@ class _MyAppState extends State<MyApp> {
                 title: Text(title,
                     style: const TextStyle(
                         fontSize: 22, fontWeight: FontWeight.w700))),
-            key: _key,
+            key: _sliderDrawerKey,
             sliderOpenSize: 179,
             slider: _SliderView(
               onItemClick: (title) {
-                _key.currentState!.closeSlider();
+                _sliderDrawerKey.currentState!.closeSlider();
                 setState(() {
                   this.title = title;
                 });
@@ -57,10 +61,9 @@ class _SliderView extends StatelessWidget {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(top: 30),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           CircleAvatar(
@@ -68,41 +71,39 @@ class _SliderView extends StatelessWidget {
             backgroundColor: Colors.grey,
             child: CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage('assets/images/user_profile.jpg'),
+              backgroundImage: Image.network(
+                      'https://nikhilvadoliya.github.io/assets/images/nikhil_1.webp')
+                  .image,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Nick',
+            textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                fontFamily: 'BalsamiqSans'),
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+            ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          _SliderMenuItem(
-              title: 'Home', iconData: Icons.home, onTap: onItemClick),
-          _SliderMenuItem(
-              title: 'Add Post',
-              iconData: Icons.add_circle,
-              onTap: onItemClick),
-          _SliderMenuItem(
-              title: 'Notification',
-              iconData: Icons.notifications_active,
-              onTap: onItemClick),
-          _SliderMenuItem(
-              title: 'Likes', iconData: Icons.favorite, onTap: onItemClick),
-          _SliderMenuItem(
-              title: 'Setting', iconData: Icons.settings, onTap: onItemClick),
-          _SliderMenuItem(
-              title: 'LogOut',
-              iconData: Icons.arrow_back_ios,
-              onTap: onItemClick),
+          ...[
+            Menu(Icons.home, 'Home'),
+            Menu(Icons.add_circle, 'Add Post'),
+            Menu(Icons.notifications_active, 'Notification'),
+            Menu(Icons.favorite, 'Likes'),
+            Menu(Icons.settings, 'Setting'),
+            Menu(Icons.arrow_back_ios, 'LogOut')
+          ]
+              .map((menu) => _SliderMenuItem(
+                  title: menu.title,
+                  iconData: menu.iconData,
+                  onTap: onItemClick))
+              .toList(),
         ],
       ),
     );
@@ -125,7 +126,7 @@ class _SliderMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
         title: Text(title,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black, fontFamily: 'BalsamiqSans_Regular')),
         leading: Icon(iconData, color: Colors.black),
         onTap: () => onTap?.call(title));
@@ -135,32 +136,33 @@ class _SliderMenuItem extends StatelessWidget {
 class _AuthorList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Data> dataList = [];
-    dataList.add(Data(Colors.amber, 'Amelia Brown',
+    List<Quotes> quotesList = [];
+    quotesList.add(Quotes(Colors.amber, 'Amelia Brown',
         'Life would be a great deal easier if dead things had the decency to remain dead.'));
-    dataList.add(Data(Colors.orange, 'Olivia Smith',
+    quotesList.add(Quotes(Colors.orange, 'Olivia Smith',
         'That proves you are unusual," returned the Scarecrow'));
-    dataList.add(Data(Colors.deepOrange, 'Sophia Jones',
+    quotesList.add(Quotes(Colors.deepOrange, 'Sophia Jones',
         'Her name badge read: Hello! My name is DIE, DEMIGOD SCUM!'));
-    dataList.add(Data(Colors.red, 'Isabella Johnson',
+    quotesList.add(Quotes(Colors.red, 'Isabella Johnson',
         'I am about as intimidating as a butterfly.'));
-    dataList.add(Data(Colors.purple, 'Emily Taylor',
+    quotesList.add(Quotes(Colors.purple, 'Emily Taylor',
         'Never ask an elf for help; they might decide your better off dead, eh?'));
-    dataList.add(Data(Colors.green, 'Maya Thomas', 'Act first, explain later'));
+    quotesList
+        .add(Quotes(Colors.green, 'Maya Thomas', 'Act first, explain later'));
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: ListView.separated(
           scrollDirection: Axis.vertical,
-          //   physics: BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           itemBuilder: (builder, index) {
             return LimitedBox(
               maxHeight: 150,
               child: Container(
-                decoration: new BoxDecoration(
-                    color: dataList[index].color,
-                    borderRadius: new BorderRadius.all(
-                      const Radius.circular(10.0),
+                decoration: BoxDecoration(
+                    color: quotesList[index].color,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10.0),
                     )),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -169,8 +171,8 @@ class _AuthorList extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
-                        dataList[index].name,
-                        style: TextStyle(
+                        quotesList[index].author,
+                        style: const TextStyle(
                             fontFamily: 'BalsamiqSans_Blod',
                             fontSize: 30,
                             color: Colors.white),
@@ -179,8 +181,8 @@ class _AuthorList extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        dataList[index].detail,
-                        style: TextStyle(
+                        quotesList[index].quote,
+                        style: const TextStyle(
                             fontFamily: 'BalsamiqSans_Regular',
                             fontSize: 15,
                             color: Colors.white),
@@ -192,26 +194,27 @@ class _AuthorList extends StatelessWidget {
             );
           },
           separatorBuilder: (builder, index) {
-            return Divider(
+            return const Divider(
               height: 10,
               thickness: 0,
             );
           },
-          itemCount: dataList.length),
+          itemCount: quotesList.length),
     );
   }
 }
 
-class Data {
-  MaterialColor color;
-  String name;
-  String detail;
+class Quotes {
+  final MaterialColor color;
+  final String author;
+  final String quote;
 
-  Data(this.color, this.name, this.detail);
+  Quotes(this.color, this.author, this.quote);
 }
 
-class ColoursHelper {
-  static Color blue() => Color(0xff5e6ceb);
+class Menu {
+  final IconData iconData;
+  final String title;
 
-  static Color blueDark() => Color(0xff4D5DFB);
+  Menu(this.iconData, this.title);
 }

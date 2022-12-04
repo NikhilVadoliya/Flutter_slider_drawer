@@ -1,18 +1,18 @@
 import 'package:flutter/widgets.dart';
 
-class SliderShadow {
-  final Color shadowColor;
+class SliderBoxShadow {
+  final Color color;
 
-  ///[double] you can change blurRadius of shadow by this parameter [shadowBlurRadius]
+  ///[double] you can change blurRadius of shadow by this parameter [blurRadius]
   ///
-  final double shadowBlurRadius;
+  final double blurRadius;
 
-  ///[double] you can change spreadRadius of shadow by this parameter [shadowSpreadRadius]
+  ///[double] you can change spreadRadius of shadow by this parameter [spreadRadius]
   ///
-  final double shadowSpreadRadius;
+  final double spreadRadius;
 
-  SliderShadow(
-      {this.shadowColor = const Color(0xFF9E9E9E),
-      this.shadowBlurRadius = 25.0,
-      this.shadowSpreadRadius = 5.0});
+  SliderBoxShadow(
+      {this.color = const Color(0xFF9E9E9E),
+      this.blurRadius = 25.0,
+      this.spreadRadius = 5.0});
 }

@@ -3,6 +3,7 @@ import 'package:flutter_slider_drawer/src/app_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/slider_app_bar.dart';
 import 'package:flutter_slider_drawer/src/helper/slider_shadow.dart';
 import 'package:flutter_slider_drawer/src/helper/utils.dart';
+import 'package:flutter_slider_drawer/src/slider_shadow.dart';
 import 'package:flutter_slider_drawer/src/slider_bar.dart';
 import 'package:flutter_slider_drawer/src/slider_direction.dart';
 
@@ -74,8 +75,8 @@ class SliderDrawer extends StatefulWidget {
   ///
   final Color splashColor;
 
-  ///[SliderShadow] you can enable shadow of [child] Widget by this parameter
-  final SliderShadow? sliderShadow;
+  ///[SliderBoxShadow] you can enable shadow of [child] Widget by this parameter
+  final SliderBoxShadow? sliderBoxShadow;
 
   ///[slideDirection] you can change slide direction by this parameter [slideDirection]
   ///There are three type of [SlideDirection]
@@ -101,7 +102,7 @@ class SliderDrawer extends StatefulWidget {
       this.splashColor = const Color(0xffffff),
       this.sliderCloseSize = 0,
       this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
-      this.sliderShadow,
+      this.sliderBoxShadow,
       this.appBar = const SliderAppBar(),
       this.isCupertino = false})
       : super(key: key);
@@ -117,27 +118,27 @@ class SliderDrawerState extends State<SliderDrawer>
   static const double BLUR_SHADOW = 20.0;
   double _percent = 0.0;
 
-  AnimationController? _animationDrawerController;
+  late AnimationController _animationDrawerController;
   late Animation _animation;
 
   bool _isDragging = false;
 
   /// check whether drawer is open
-  bool get isDrawerOpen => _animationDrawerController!.isCompleted;
+  bool get isDrawerOpen => _animationDrawerController.isCompleted;
 
   /// it's provide [animationController] for handle and lister drawer animation
-  AnimationController? get animationController => _animationDrawerController;
+  AnimationController get animationController => _animationDrawerController;
 
   /// Toggle drawer
-  void toggle() => _animationDrawerController!.isCompleted
-      ? _animationDrawerController!.reverse()
-      : _animationDrawerController!.forward();
+  void toggle() => _animationDrawerController.isCompleted
+      ? _animationDrawerController.reverse()
+      : _animationDrawerController.forward();
 
   /// Open slider
-  void openSlider() => _animationDrawerController!.forward();
+  void openSlider() => _animationDrawerController.forward();
 
   /// Close slider
-  void closeSlider() => _animationDrawerController!.reverse();
+  void closeSlider() => _animationDrawerController.reverse();
   Color _appBarColor = Color(0xffffffff);
 
   @override
@@ -151,7 +152,7 @@ class SliderDrawerState extends State<SliderDrawer>
     _animation =
         Tween<double>(begin: widget.sliderCloseSize, end: widget.sliderOpenSize)
             .animate(CurvedAnimation(
-                parent: _animationDrawerController!,
+                parent: _animationDrawerController,
                 curve: Curves.decelerate,
                 reverseCurve: Curves.decelerate));
     if (widget.appBar is SliderAppBar) {
@@ -162,29 +163,29 @@ class SliderDrawerState extends State<SliderDrawer>
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constrain) {
-      return Container(
-          child: Stack(children: <Widget>[
-        ///  Menu
+      return SizedBox(
+          child: Stack(children: [
+        ///Menu
         SliderBar(
           slideDirection: widget.slideDirection,
           sliderMenu: widget.slider,
           sliderMenuOpenSize: widget.sliderOpenSize,
         ),
 
-        /// Displaying the  shadow
-        if (widget.sliderShadow != null) ...[
-          _Shadow(
+        /// Shadow
+        if (widget.sliderBoxShadow != null) ...[
+          SliderShadow(
             animationDrawerController: _animationDrawerController,
             slideDirection: widget.slideDirection,
             sliderOpenSize: widget.sliderOpenSize,
             animation: _animation,
-            sliderShadow: widget.sliderShadow!,
+            sliderBoxShadow: widget.sliderBoxShadow!,
           ),
         ],
 
         //Child
         AnimatedBuilder(
-          animation: _animationDrawerController!,
+          animation: _animationDrawerController,
           builder: (_, child) {
             return Transform.translate(
               offset: Utils.getOffsetValues(
@@ -193,7 +194,6 @@ class SliderDrawerState extends State<SliderDrawer>
             );
           },
           child: GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
             onHorizontalDragStart: _onHorizontalDragStart,
             onHorizontalDragEnd: _onHorizontalDragEnd,
             onHorizontalDragUpdate: (detail) =>
@@ -209,7 +209,7 @@ class SliderDrawerState extends State<SliderDrawer>
                       isCupertino: widget.isCupertino,
                       slideDirection: widget.slideDirection,
                       onTap: () => toggle(),
-                      animationController: _animationDrawerController!,
+                      animationController: _animationDrawerController,
                       splashColor: widget.splashColor,
                       sliderAppBar: widget.appBar as SliderAppBar,
                     ),
@@ -228,18 +228,19 @@ class SliderDrawerState extends State<SliderDrawer>
   @override
   void dispose() {
     super.dispose();
-    _animationDrawerController!.dispose();
+    _animationDrawerController.dispose();
   }
 
   void _onHorizontalDragStart(DragStartDetails detail) {
     if (!widget.isDraggable) return;
-
     //Check use start dragging from left edge / right edge then enable dragging
+    final rightSideWidthGesture =
+        MediaQuery.of(context).size.width - WIDTH_GESTURE;
     if ((widget.slideDirection == SlideDirection.LEFT_TO_RIGHT &&
                 detail.localPosition.dx <= WIDTH_GESTURE) ||
             (widget.slideDirection == SlideDirection.RIGHT_TO_LEFT &&
                 detail.localPosition.dx >=
-                    WIDTH_GESTURE) /*&&
+                    rightSideWidthGesture) /*&&
         detail.localPosition.dy <= widget.appBarHeight*/
         ) {
       this.setState(() {
@@ -270,9 +271,10 @@ class SliderDrawerState extends State<SliderDrawer>
     BoxConstraints constraints,
   ) {
     if (!widget.isDraggable) return;
-    // open drawer for left/right type drawer
-    if (_isDragging && widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
-        widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) {
+    // Open Drawer : Slider Open -> Left/Right
+    if (_isDragging &&
+        (widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
+            widget.slideDirection == SlideDirection.RIGHT_TO_LEFT)) {
       var globalPosition = detail.globalPosition.dx;
       globalPosition = globalPosition < 0 ? 0 : globalPosition;
       double position = globalPosition / constraints.maxWidth;
@@ -281,7 +283,7 @@ class SliderDrawerState extends State<SliderDrawer>
           : (1 - position);
       move(realPosition);
     }
-    // open drawer for top/bottom type drawer
+    // Open Drawer : Slider Open -> Top/Bottom
     /*if (dragging && widget.slideDirection == SlideDirection.TOP_TO_BOTTOM) {
       var globalPosition = detail.globalPosition.dx;
       globalPosition = globalPosition < 0 ? 0 : globalPosition;
@@ -292,7 +294,7 @@ class SliderDrawerState extends State<SliderDrawer>
       move(realPosition);
     }*/
 
-    // close drawer for left/right type drawer
+    // Close Drawer : Slider Open -> Left/Right
     if (isDrawerOpen &&
         (widget.slideDirection == SlideDirection.LEFT_TO_RIGHT ||
             widget.slideDirection == SlideDirection.RIGHT_TO_LEFT) &&
@@ -303,63 +305,8 @@ class SliderDrawerState extends State<SliderDrawer>
 
   move(double percent) {
     _percent = percent;
-    _animationDrawerController!.value = percent;
+    _animationDrawerController.value = percent;
   }
 
-  openOrClose() {
-    if (_percent > 0.3) {
-      openSlider();
-    } else {
-      closeSlider();
-    }
-  }
-}
-
-class _Shadow extends StatelessWidget {
-  const _Shadow({
-    Key? key,
-    required AnimationController? animationDrawerController,
-    required this.animation,
-    required this.sliderShadow,
-    required this.slideDirection,
-    required this.sliderOpenSize,
-  })  : _animationDrawerController = animationDrawerController,
-        super(key: key);
-
-  final AnimationController? _animationDrawerController;
-  final Animation animation;
-  final SliderShadow sliderShadow;
-  final SlideDirection slideDirection;
-  final double sliderOpenSize;
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animationDrawerController!,
-      builder: (_, child) {
-        return Transform.translate(
-          offset: Utils.getOffsetValueForShadow(
-              slideDirection, animation.value, sliderOpenSize),
-          child: child,
-        );
-      },
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
-          BoxShadow(
-            color: sliderShadow.shadowColor,
-            blurRadius: sliderShadow.shadowBlurRadius,
-            // soften the shadow
-            spreadRadius: sliderShadow.shadowSpreadRadius,
-            //extend the shadow
-            offset: Offset(
-              15.0, // Move to right 15  horizontally
-              15.0, // Move to bottom 15 Vertically
-            ),
-          )
-        ]),
-      ),
-    );
-  }
+  openOrClose() => _percent > 0.3 ? openSlider() : closeSlider();
 }
