@@ -38,8 +38,6 @@ class SliderAppBar extends StatelessWidget {
   ///
   final double drawerIconSize;
 
-
-
   const SliderAppBar({
     this.appBarHeight = 70,
     this.title = const Text('AppBar',

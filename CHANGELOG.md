@@ -1,3 +1,7 @@
+## [2.1.3] - Release
+ * Improvement
+
+
 ## [2.1.2] - Release
  * replace `sliderShadow` to `sliderBoxShadow`
  * Slider RightToLeft : Gesture area issue fixed
