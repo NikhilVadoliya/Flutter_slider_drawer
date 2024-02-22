@@ -92,20 +92,26 @@ class SliderDrawer extends StatefulWidget {
   ///
   final bool isCupertino;
 
-  const SliderDrawer(
-      {Key? key,
-      required this.slider,
-      required this.child,
-      this.isDraggable = true,
-      this.animationDuration = 400,
-      this.sliderOpenSize = 265,
-      this.splashColor = const Color(0xffffff),
-      this.sliderCloseSize = 0,
-      this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
-      this.sliderBoxShadow,
-      this.appBar = const SliderAppBar(),
-      this.isCupertino = false})
-      : super(key: key);
+  ///[bool] choose whether to use the gestures, if there is a conflict in the application body.
+  ///
+  /// The default is true
+  final bool useGestures;
+
+  const SliderDrawer({
+    Key? key,
+    required this.slider,
+    required this.child,
+    this.isDraggable = true,
+    this.animationDuration = 400,
+    this.sliderOpenSize = 265,
+    this.splashColor = const Color(0xffffff),
+    this.sliderCloseSize = 0,
+    this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
+    this.sliderBoxShadow,
+    this.appBar = const SliderAppBar(),
+    this.isCupertino = false,
+    this.useGestures = true,
+  }) : super(key: key);
 
   @override
   SliderDrawerState createState() => SliderDrawerState();
@@ -163,6 +169,28 @@ class SliderDrawerState extends State<SliderDrawer>
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constrain) {
+      Widget mainBody = Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: _appBarColor,
+        child: Column(
+          children: <Widget>[
+            if (widget.appBar != null && widget.appBar is SliderAppBar)
+              SAppBar(
+                isCupertino: widget.isCupertino,
+                slideDirection: widget.slideDirection,
+                onTap: () => toggle(),
+                animationController: _animationDrawerController,
+                splashColor: widget.splashColor,
+                sliderAppBar: widget.appBar as SliderAppBar,
+              ),
+            if (widget.appBar != null && widget.appBar is! SliderAppBar)
+              widget.appBar!,
+            Expanded(child: widget.child),
+          ],
+        ),
+      );
+
       return SizedBox(
           child: Stack(children: [
         ///Menu
@@ -193,33 +221,15 @@ class SliderDrawerState extends State<SliderDrawer>
               child: child,
             );
           },
-          child: GestureDetector(
-            onHorizontalDragStart: _onHorizontalDragStart,
-            onHorizontalDragEnd: _onHorizontalDragEnd,
-            onHorizontalDragUpdate: (detail) =>
-                _onHorizontalDragUpdate(detail, constrain),
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: _appBarColor,
-              child: Column(
-                children: <Widget>[
-                  if (widget.appBar != null && widget.appBar is SliderAppBar)
-                    SAppBar(
-                      isCupertino: widget.isCupertino,
-                      slideDirection: widget.slideDirection,
-                      onTap: () => toggle(),
-                      animationController: _animationDrawerController,
-                      splashColor: widget.splashColor,
-                      sliderAppBar: widget.appBar as SliderAppBar,
-                    ),
-                  if (widget.appBar != null && widget.appBar is! SliderAppBar)
-                    widget.appBar!,
-                  Expanded(child: widget.child),
-                ],
-              ),
-            ),
-          ),
+          child: (widget.useGestures)
+              ? GestureDetector(
+                  onHorizontalDragStart: _onHorizontalDragStart,
+                  onHorizontalDragEnd: _onHorizontalDragEnd,
+                  onHorizontalDragUpdate: (detail) =>
+                      _onHorizontalDragUpdate(detail, constrain),
+                  child: mainBody,
+                )
+              : mainBody,
         ),
       ]));
     });
