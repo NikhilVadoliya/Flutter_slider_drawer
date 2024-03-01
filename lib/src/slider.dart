@@ -181,13 +181,15 @@ class SliderDrawerState extends State<SliderDrawer>
               width: double.infinity,
             ),
             if (widget.appBar != null && widget.appBar is SliderAppBar)
-              SAppBar(
-                isCupertino: widget.isCupertino,
-                slideDirection: widget.slideDirection,
-                onTap: () => toggle(),
-                animationController: _animationDrawerController,
-                splashColor: widget.splashColor,
-                sliderAppBar: widget.appBar as SliderAppBar,
+              SafeArea(
+                child: SAppBar(
+                  isCupertino: widget.isCupertino,
+                  slideDirection: widget.slideDirection,
+                  onTap: () => toggle(),
+                  animationController: _animationDrawerController,
+                  splashColor: widget.splashColor,
+                  sliderAppBar: widget.appBar as SliderAppBar,
+                ),
               ),
             if (widget.appBar != null && widget.appBar is! SliderAppBar)
               widget.appBar!,
