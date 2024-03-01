@@ -175,6 +175,11 @@ class SliderDrawerState extends State<SliderDrawer>
         color: _appBarColor,
         child: Column(
           children: <Widget>[
+            // Remove space status bar
+            SizedBox(
+              height: MediaQuery.of(context).viewPadding.top,
+              width: double.infinity,
+            ),
             if (widget.appBar != null && widget.appBar is SliderAppBar)
               SAppBar(
                 isCupertino: widget.isCupertino,
