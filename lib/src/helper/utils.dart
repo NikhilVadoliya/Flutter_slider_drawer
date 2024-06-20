@@ -2,6 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 
+/// Signature for the callback that's called when a [DrawerController] is
+/// opened or closed.
+typedef DrawerCallback = void Function(bool isOpened);
+
 class Utils {
   ///
   /// This method get Offset base on [sliderOpen] type
