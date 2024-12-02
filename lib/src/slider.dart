@@ -92,20 +92,24 @@ class SliderDrawer extends StatefulWidget {
   ///
   final bool isCupertino;
 
-  const SliderDrawer(
-      {Key? key,
-      required this.slider,
-      required this.child,
-      this.isDraggable = true,
-      this.animationDuration = 400,
-      this.sliderOpenSize = 265,
-      this.splashColor = const Color(0xffffff),
-      this.sliderCloseSize = 0,
-      this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
-      this.sliderBoxShadow,
-      this.appBar = const SliderAppBar(),
-      this.isCupertino = false})
-      : super(key: key);
+  /// Optional callback that is called when the [Scaffold.drawer] is opened or closed.
+  final DrawerCallback? onDrawerChanged;
+
+  const SliderDrawer({
+    Key? key,
+    required this.slider,
+    required this.child,
+    this.isDraggable = true,
+    this.animationDuration = 400,
+    this.sliderOpenSize = 265,
+    this.splashColor = const Color(0xffffff),
+    this.sliderCloseSize = 0,
+    this.slideDirection = SlideDirection.LEFT_TO_RIGHT,
+    this.sliderBoxShadow,
+    this.appBar = const SliderAppBar(),
+    this.isCupertino = false,
+    this.onDrawerChanged,
+  }) : super(key: key);
 
   @override
   SliderDrawerState createState() => SliderDrawerState();
@@ -146,8 +150,14 @@ class SliderDrawerState extends State<SliderDrawer>
     super.initState();
 
     _animationDrawerController = AnimationController(
-        vsync: this,
-        duration: Duration(milliseconds: widget.animationDuration));
+        vsync: this, duration: Duration(milliseconds: widget.animationDuration))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          widget.onDrawerChanged!(true);
+        } else if (status == AnimationStatus.dismissed) {
+          widget.onDrawerChanged!(false);
+        }
+      });
 
     _animation =
         Tween<double>(begin: widget.sliderCloseSize, end: widget.sliderOpenSize)
