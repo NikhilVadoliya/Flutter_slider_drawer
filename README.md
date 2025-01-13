@@ -1,4 +1,6 @@
-# Flutter slider drawer
+# Flutter Slider Drawer
+
+<img src="banner.png" alt="drawing"/>
 
 [![pub package](https://img.shields.io/pub/v/flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)   [![pub package](https://img.shields.io/github/languages/code-size/NikhilVadoliya/Flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)
 
@@ -19,12 +21,6 @@ To start using this package, add `flutter_slider_drawer` dependency to your `pub
 dependencies:
   flutter_slider_drawer: '<latest_release>'
 ```
-
-# Contribute to Development
-Your contribution will help improve the plugin
-
-<a href="https://www.buymeacoffee.com/nick94" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-
 
 # Features
 
@@ -117,6 +113,12 @@ class _MyAppState extends State<MyApp> {
 
 
 ``` _key.currentState.animationController```
+
+# Contribute to Development
+Your contribution will help improve the plugin
+
+<a href="https://www.buymeacoffee.com/nick94" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 
 License
 ----
