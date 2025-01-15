@@ -25,7 +25,7 @@ dependencies:
 # Features
 
   - Slider with custom animation time
-  - Provide Basic Appbar with customization of color, size and title
+  - Provide Basic Appbar with customization of color and title
   - Dynamic slider open and close offset
   - Provide drawer icon animation 
   - Provide shadow of Main screen with customization of shadow colors,blurRadius and spreadRadius
@@ -37,32 +37,34 @@ dependencies:
 # Code 
 
 ```
-  Widget build(BuildContext context) {
-     return Scaffold(
-         body: SliderDrawer(
-           key: _key,
-           appBar: SliderAppBar(
-               appBarColor: Colors.white,
-               title: Text(title,
-                   style: const TextStyle(
-                       fontSize: 22, fontWeight: FontWeight.w700))),
-           slider: Container(color: Colors.red),
-           child: Container(color: Colors.amber),
-         ));
-   }
+Widget build(BuildContext context) {
+    return Scaffold(
+        body: SliderDrawer(
+      key: _sliderDrawerKey,
+      appBar: SliderAppBar(
+        config: SliderAppBarConfig(
+            title: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        )),
+      ),
+      sliderOpenSize: 179,
+      slider: Container(color: Colors.red),
+      child: Container(color: Colors.amber),
+    ));
+  }
  ```
 
 </br>
  </br>
 
- ![slider_document](slider_d_1.png)
+ ![slider_document](information.png)
  </br>
  </br>
- </br>
- </br>
- 
- ![slider_document](slider_d_2.png)
-
  </br>
  </br>
 
@@ -81,18 +83,26 @@ dependencies:
 
 ```
 class _MyAppState extends State<MyApp> {
-  GlobalKey<SliderDrawerState> _key = GlobalKey<SliderDrawerState>();
+  GlobalKey<SliderDrawerState> _sliderDrawerKey = GlobalKey<SliderDrawerState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SliderDrawer(
-      key: _key,
+      key: _sliderDrawerKey,
       appBar: SliderAppBar(
-          appBarColor: Colors.white,
-          title: Text('Title',
-              style:
-                  const TextStyle(fontSize: 22, fontWeight: FontWeight.w700))),
+        config: SliderAppBarConfig(
+            title: Text(
+          title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+       ),
+      ),
+      sliderOpenSize: 179,
       slider: Container(color: Colors.red),
       child: Container(color: Colors.amber),
     ));
@@ -103,16 +113,16 @@ class _MyAppState extends State<MyApp> {
 
 * Using the below methods to control drawer .
 ``` 
- _key.currentState.closeDrawer();
- _key.currentState.openDrawer();
- _key.currentState.toggle();
- _key.currentState.isDrawerOpen();
+ _sliderDrawerKey.currentState.closeDrawer();
+ _sliderDrawerKey.currentState.openDrawer();
+ _sliderDrawerKey.currentState.toggle();
+ _sliderDrawerKey.currentState.isDrawerOpen();
 
  ```
 * Use below variable if you want to control animation.
 
 
-``` _key.currentState.animationController```
+``` __sliderDrawerKey.currentState.animationController```
 
 # Contribute to Development
 Your contribution will help improve the plugin

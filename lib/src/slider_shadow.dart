@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_slider_drawer/src/helper/utils.dart';
+import 'package:flutter_slider_drawer/src/core/slider_shadow.dart';
+import 'package:flutter_slider_drawer/src/core/utils.dart';
 
-import 'helper/slider_shadow.dart';
 import 'slider_direction.dart';
 
 class SliderShadow extends StatelessWidget {

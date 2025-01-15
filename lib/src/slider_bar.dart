@@ -20,11 +20,11 @@ class SliderBar extends StatelessWidget {
   Widget build(BuildContext context) {
     var container = SizedBox(width: sliderMenuOpenSize, child: sliderMenu);
     switch (slideDirection) {
-      case SlideDirection.LEFT_TO_RIGHT:
+      case SlideDirection.leftToRight:
         return container;
-      case SlideDirection.RIGHT_TO_LEFT:
+      case SlideDirection.rightToLeft:
         return Positioned(right: 0, top: 0, bottom: 0, child: container);
-      case SlideDirection.TOP_TO_BOTTOM:
+      case SlideDirection.topToBottom:
         return Positioned(right: 0, left: 0, top: 0, child: container);
     }
   }
