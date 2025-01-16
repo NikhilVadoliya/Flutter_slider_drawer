@@ -28,28 +28,29 @@ dependencies:
   - If you are using CupertinoApp then pass `isCupertino: true`
 
 
-# Code 
-
+# Code
 ```
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
-        body: SliderDrawer(
-      key: _sliderDrawerKey,
-      appBar: SliderAppBar(
-        config: SliderAppBarConfig(
+      body: SliderDrawer(
+        key: _sliderDrawerKey,
+        appBar: SliderAppBar(
+          config: SliderAppBarConfig(
             title: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
-        )),
+        ),
+        sliderOpenSize: 179,
+        slider: Container(color: Colors.red),
+        child: Container(color: Colors.amber),
       ),
-      sliderOpenSize: 179,
-      slider: Container(color: Colors.red),
-      child: Container(color: Colors.amber),
-    ));
+    );
   }
  ```
 
@@ -77,29 +78,31 @@ Widget build(BuildContext context) {
 
 ```
 class _MyAppState extends State<MyApp> {
-  GlobalKey<SliderDrawerState> _sliderDrawerKey = GlobalKey<SliderDrawerState>();
+   GlobalKey<SliderDrawerState> _sliderDrawerKey =
+      GlobalKey<SliderDrawerState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SliderDrawer(
-      key: _sliderDrawerKey,
-      appBar: SliderAppBar(
-        config: SliderAppBarConfig(
+      body: SliderDrawer(
+        key: _sliderDrawerKey,
+        appBar: SliderAppBar(
+          config: SliderAppBarConfig(
             title: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.w700,
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
           ),
         ),
-       ),
+        sliderOpenSize: 179,
+        slider: Container(color: Colors.red),
+        child: Container(color: Colors.amber),
       ),
-      sliderOpenSize: 179,
-      slider: Container(color: Colors.red),
-      child: Container(color: Colors.amber),
-    ));
+    );
   }
 }
       
