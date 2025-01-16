@@ -1,22 +1,21 @@
 ## [3.0.0] - Enhance animation and performance
-* Deprecated Features:
-	•	isTitleCenter: Replaced with TextAlign in the Text widget for better control.
-	•	drawerIcon: Use a custom appBar for enhanced customization.
-	•	appBarHeight: This feature has been deprecated.
-	•	appBarColor: Replaced with backgroundColor in SliderAppBarConfig.
-	•	appBarPadding: Now replaced with padding in SliderAppBarConfig.
-* New Features:
-	•	Added SliderAppBarConfig for streamlined AppBar configuration.
-* Rename SlideDirection enums for consistency:
-	•	LEFT_TO_RIGHT → leftToRight
-	•	RIGHT_TO_LEFT → rightToLeft
-	•	TOP_TO_BOTTOM → topToBottom
-* Upgrade dart version min 3.0.0. 
+* Upgrade dart version min `3.0.0`.
+#### Deprecated Features:
+*	`isTitleCenter`: Replaced with `TextAlign` in the `Text` widget for better control.
+*	`drawerIcon`: Use a custom appBar for enhanced customization.
+*	`appBarHeight`: This feature has been deprecated.
+*	`appBarColor`: Replaced with backgroundColor in `SliderAppBarConfig`.
+*	`appBarPadding`: Now replaced with padding in `SliderAppBarConfig`.
+#### New Features:
+*	Added `SliderAppBarConfig` for streamlined AppBar configuration.
+#### Rename SlideDirection enums for consistency:
+*	LEFT_TO_RIGHT → leftToRight
+*	RIGHT_TO_LEFT → rightToLeft
+*	TOP_TO_BOTTOM → topToBottom
 
 
-# [2.1.3] - Release
- * Improvement
-
+## [2.1.3] - Release
+* Improvement
 
 ## [2.1.2] - Release
  * replace `sliderShadow` to `sliderBoxShadow`
