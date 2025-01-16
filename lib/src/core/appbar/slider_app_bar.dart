@@ -34,30 +34,35 @@ class _InternalSliderAppBar extends BaseSliderAppBar
     implements PreferredSizeWidget {
   /// Animation controller for drawer sliding effect
   final AnimationController animationController;
+  final SlideDirection slideDirection;
 
   const _InternalSliderAppBar({
     required SliderAppBarConfig config,
     required this.animationController,
+    required this.slideDirection,
     VoidCallback? onDrawerTap,
   }) : super(config: config, onDrawerTap: onDrawerTap);
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> items = [
+      _LeadingIcon(
+        onTap: onDrawerTap,
+        animationController: animationController,
+        config: config,
+      ),
+      Expanded(child: config.title),
+      config.trailing ?? SizedBox(width: 35)
+    ];
+
+    if (slideDirection == SlideDirection.rightToLeft)
+      items = items.reversed.toList();
+
     return Container(
       height: kToolbarHeight,
       padding: config.padding,
       color: config.backgroundColor ?? Color(0xFFFFFFFF),
-      child: Row(
-        children: [
-          _LeadingIcon(
-            onTap: onDrawerTap,
-            animationController: animationController,
-            config: config,
-          ),
-          Expanded(child: config.title),
-          config.trailing ?? SizedBox(width: 35)
-        ],
-      ),
+      child: Row(children: items),
     );
   }
 
@@ -126,11 +131,13 @@ class AppBar extends StatelessWidget {
   final Widget? appBar;
   final AnimationController animationDrawerController;
   final VoidCallback? onDrawerTap;
+  final SlideDirection slideDirection;
 
   const AppBar({
     this.appBar,
     required this.animationDrawerController,
     this.onDrawerTap,
+    required this.slideDirection,
   });
 
   @override
@@ -139,6 +146,7 @@ class AppBar extends StatelessWidget {
       return _InternalSliderAppBar(
         config: SliderAppBarConfig(),
         onDrawerTap: onDrawerTap,
+        slideDirection: slideDirection,
         animationController: animationDrawerController,
       );
     }
@@ -148,6 +156,7 @@ class AppBar extends StatelessWidget {
       return _InternalSliderAppBar(
         animationController: animationDrawerController,
         config: sliderAppBar.config,
+        slideDirection: slideDirection,
         onDrawerTap: onDrawerTap,
       );
     }

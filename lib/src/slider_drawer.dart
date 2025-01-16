@@ -188,6 +188,7 @@ class SliderDrawerState extends State<SliderDrawer>
                   child: Column(
                     children: [
                       AppBar(
+                        slideDirection: widget.slideDirection,
                         animationDrawerController:
                             _controller.animationController,
                         appBar: widget.appBar,
