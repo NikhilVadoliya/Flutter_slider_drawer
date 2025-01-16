@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
-import 'package:flutter_slider_drawer/src/core/appbar/slider_app_bar_config.dart';
 
 abstract class BaseSliderAppBar extends StatelessWidget {
   // Configuration for the app bar's appearance and behavior

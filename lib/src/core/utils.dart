@@ -17,8 +17,6 @@ class Utils {
         return Offset(-value - 5, 0);
       case SlideDirection.topToBottom:
         return Offset(0, value - (slideOpenWidth > 50 ? 15 : 5));
-      default:
-        return Offset(value - 30.0, 0);
     }
   }
 }
