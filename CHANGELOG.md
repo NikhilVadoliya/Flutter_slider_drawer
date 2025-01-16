@@ -1,3 +1,6 @@
+## [3.0.1] - Enhance documentation
+* Update documentation for better understanding.
+
 ## [3.0.0] - Enhance animation and performance
 * Upgrade dart version min `3.0.0`.
 #### Deprecated Features:
