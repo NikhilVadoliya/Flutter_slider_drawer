@@ -1,10 +1,7 @@
-# Flutter Slider Drawer
-
 ![slider_document](banner.png)
 
-
+# Flutter Slider Drawer
 [![pub package](https://img.shields.io/pub/v/flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)   [![pub package](https://img.shields.io/github/languages/code-size/NikhilVadoliya/Flutter_slider_drawer)](https://pub.dev/packages/flutter_slider_drawer)
-
 
 A Flutter package with custom implementation of the Slider Drawer Menu 
 
