@@ -1,3 +1,6 @@
+## [3.0.2] - Enhance documentation
+* Update documentation for better understanding.
+* 
 ## [3.0.1] - Enhance documentation
 * Update documentation for better understanding.
 
