@@ -54,9 +54,9 @@ class _InternalSliderAppBar extends BaseSliderAppBar
       config.trailing ?? SizedBox(width: 35)
     ];
 
-    if (slideDirection == SlideDirection.rightToLeft)
+    if (slideDirection == SlideDirection.rightToLeft) {
       items = items.reversed.toList();
-
+    }
     return Container(
       height: kToolbarHeight,
       padding: config.padding,
